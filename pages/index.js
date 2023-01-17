@@ -1,14 +1,13 @@
 import Link from 'next/link';
+import AccountButton from '../components/AccountButton';
 
 // pages/index.js
 export default function Home({ formattedDate }) {
   return (
     <>
-      <h1>Static page</h1>
-      <p>This page is static. It was built on {formattedDate}.</p>
-      <p>
-        <Link href="/ssr">View a server-side rendered page.</Link>
-      </p>
+      <h1>Login</h1>
+      <AccountButton/>
+      <p>{formattedDate}</p>
     </>
   );
 }
