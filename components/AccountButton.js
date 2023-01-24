@@ -12,7 +12,7 @@ function AccountButton(){
         "response_type=code" +
         "&client_id=" + "5aa617fd-e31c-42de-a10f-b6c9ff903138" +
         "&scope=read_odometer read_vehicle_info required:read_location" +
-        "&redirect_uri=" + "https://local.phowma.com/exchange" +
+        "&redirect_uri=" + process.env.NEXT_PUBLIC_HOME + "exchange" +
         "&state=0facda3q3q3q3q19" +
         "&mode=test" 
         return url;
