@@ -21,6 +21,8 @@ export default function Exchange() {
   const [vehicle, setVehicle] = useState(null);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+  const [vin, setVin] = useState(null);
+
   useEffect(() => {
       if (router.isReady){
           onGetTokens();
@@ -67,8 +69,17 @@ export default function Exchange() {
       });
   }
 
+  const onGetVin = () => {
+    smartcarService.getVin(accessToken, vehicle).then(function(result){
+        setVin(result.vin);
+        console.log(result);
+    }).catch(function(err){
+        console.log(err);
+    });
+  }
+  
   const onStartOver = () => {
-      window.location.href = "https://local.phowma.com";
+      window.location.href = "https://localhost:3000";
   }
   return (
     <>
@@ -81,6 +92,11 @@ export default function Exchange() {
       <p>{ vehicle }</p>
       <button onClick={onGetLocation}>Get Location</button>
       <p>latitude: {latitude} longitude: {longitude}</p>
+
+      <button onClick={onGetVin}>Get Vin</button>
+      <p>VIN: {vin}</p>
+
+
       <button onClick={onStartOver}>Start Over</button>
     </>
   );
