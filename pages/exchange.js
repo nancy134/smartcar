@@ -22,6 +22,9 @@ export default function Exchange() {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [vin, setVin] = useState(null);
+  const [percentRemaining, setPercentRemaining] = useState(null);
+  const [range, setRange] = useState(null);
+
 
   useEffect(() => {
       if (router.isReady){
@@ -78,6 +81,18 @@ export default function Exchange() {
     });
   }
   
+
+  const onGetBattery = () => {
+    smartcarService.getBattery(accessToken, vehicle).then(function(result){
+        setPercentRemaining(result.percentRemaining);
+        setRange(result.range);
+        console.log(result);
+    }).catch(function(err){
+        console.log(err);
+    });
+  }
+  
+
   const onStartOver = () => {
       window.location.href = "https://localhost:3000";
   }
@@ -95,6 +110,11 @@ export default function Exchange() {
 
       <button onClick={onGetVin}>Get Vin</button>
       <p>VIN: {vin}</p>
+
+
+      <button onClick={onGetBattery}>Get Battery</button>
+      <p>Percent Remaining: {percentRemaining}</p>
+	  <p>Range: {range}</p>
 
 
       <button onClick={onStartOver}>Start Over</button>
