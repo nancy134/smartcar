@@ -24,7 +24,7 @@ export default function Exchange() {
   const [vin, setVin] = useState(null);
   const [percentRemaining, setPercentRemaining] = useState(null);
   const [range, setRange] = useState(null);
-
+  const [distance, setDistance] = useState(null);
 
   useEffect(() => {
       if (router.isReady){
@@ -92,7 +92,16 @@ export default function Exchange() {
     });
   }
   
+  const onGetOdometer = () => {
+    smartcarService.getOdometer(accessToken, vehicle).then(function(result){
+        setDistance(result.distance);
+        console.log(result);
+    }).catch(function(err){
+        console.log(err);
+    });
+  }
 
+  
   const onStartOver = () => {
       window.location.href = "https://localhost:3000";
   }
@@ -116,6 +125,9 @@ export default function Exchange() {
       <p>Percent Remaining: {percentRemaining}</p>
 	  <p>Range: {range}</p>
 
+
+      <button onClick={onGetOdometer}>Get Odometer</button>
+      <p>Distance: {distance}</p>
 
       <button onClick={onStartOver}>Start Over</button>
     </>

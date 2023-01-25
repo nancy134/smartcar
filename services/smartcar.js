@@ -44,9 +44,9 @@ const smartcar = {
     getVehicles,
     getLocation,
 	getVin,
-	getBattery
+	getBattery,
+	getOdometer
 };
-
 
 export function getVin(accessToken, id){
     return new Promise(function(resolve, reject){
@@ -87,6 +87,28 @@ export function getBattery(accessToken, id){
         }); 
     });
 }
+
+
+export function getOdometer(accessToken, id){
+    return new Promise(function(resolve, reject){
+        var url = process.env.NEXT_PUBLIC_API_SERVICE + 'smartcar/vehicles/' + id + '/odometer';
+        var bearerToken = "Bearer " + accessToken;
+        var headers = {
+            "Authorization" : bearerToken
+        };
+        var options = {
+            method: 'GET',
+            url: url,
+            headers: headers
+        };
+        axios(options).then(function(response){
+            resolve(response.data);
+        }).catch(function(err){
+            reject(err);
+        }); 
+    });
+}
+
 
 export default smartcar;
 
