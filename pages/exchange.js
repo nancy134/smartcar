@@ -25,6 +25,11 @@ export default function Exchange() {
   const [percentRemaining, setPercentRemaining] = useState(null);
   const [range, setRange] = useState(null);
   const [distance, setDistance] = useState(null);
+  const [id, setId] = useState(null);
+  const [make, setMake] = useState(null);
+  const [model, setModel] = useState(null);
+  const [year, setYear] = useState(null);
+
 
   useEffect(() => {
       if (router.isReady){
@@ -102,6 +107,20 @@ export default function Exchange() {
   }
 
   
+  const onGetVehicleAttributes = () => {
+    smartcarService.getVehicleAttributes(accessToken, vehicle).then(function(result){
+        setId(result.id);
+		setMake(result.make);
+		setModel(result.model);
+		setYear(result.year);
+        console.log(result);
+    }).catch(function(err){
+        console.log(err);
+    });
+  }
+
+
+
   const onStartOver = () => {
       window.location.href = "https://localhost:3000";
   }
@@ -129,8 +148,15 @@ export default function Exchange() {
       <button onClick={onGetOdometer}>Get Odometer</button>
       <p>Distance: {distance}</p>
 
+      <button onClick={onGetVehicleAttributes}>Get Vehicle Attributes</button>
+      <p>Id: {id}</p>      
+	  <p>Make: {make}</p>
+	  <p>Model: {model}</p>
+	  <p>Year: {year}</p>
+
       <button onClick={onStartOver}>Start Over</button>
     </>
   );
 }
+
 
