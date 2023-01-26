@@ -29,7 +29,11 @@ export default function Exchange() {
   const [make, setMake] = useState(null);
   const [model, setModel] = useState(null);
   const [year, setYear] = useState(null);
-
+  const [frontLeft, setFrontLeft] = useState(null);
+  const [frontRight, setFrontRight] = useState(null);
+  const [backLeft, setBackLeft] = useState(null);
+  const [backRight, setBackRight] = useState(null);
+  
 
   useEffect(() => {
       if (router.isReady){
@@ -119,7 +123,17 @@ export default function Exchange() {
     });
   }
 
-
+  const onGetTirePressure = () => {
+    smartcarService.getTirePressure(accessToken, vehicle).then(function(result){
+        setFrontLeft(result.frontLeft);
+		setFrontRight(result.frontRight);
+		setBackLeft(result.backLeft);
+		setBackRight(result.backRight);
+        console.log(result);
+    }).catch(function(err){
+        console.log(err);
+    });
+  }
 
   const onStartOver = () => {
       window.location.href = "https://localhost:3000";
@@ -153,6 +167,12 @@ export default function Exchange() {
 	  <p>Make: {make}</p>
 	  <p>Model: {model}</p>
 	  <p>Year: {year}</p>
+
+      <button onClick={onGetTirePressure}>Get TirePressure</button>
+      <p>Front Left: {frontLeft}</p>      
+	  <p>Front Right: {frontRight}</p>
+	  <p>Back Left: {backLeft}</p>
+	  <p>Back Right: {backRight}</p>
 
       <button onClick={onStartOver}>Start Over</button>
     </>
