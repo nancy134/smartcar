@@ -39,7 +39,10 @@ export default function Exchange() {
     const [amountRemainingFuel, setAmountRemainingFuel] = useState(null);
     const [percentRemainingFuel, setPercentRemainingFuel] = useState(null);
     const [rangeFuel, setRangeFuel] = useState(null);
-  
+    const [isPluggedIn, setIsPluggedIn] = useState(null);
+    const [chargeState, setChargeState] = useState(null);
+
+
 
   useEffect(() => {
       if (router.isReady){
@@ -154,6 +157,16 @@ export default function Exchange() {
   }
 
 
+  const onGetCharge = () => {
+    smartcarService.getCharge(accessToken, vehicle).then(function(result){
+        setIsPluggedIn(result.isPluggedIn);
+		setChargeState(result.state);
+        console.log(result);
+    }).catch(function(err){
+        console.log(err);
+    });
+  }
+
 
   const onStartOver = () => {
       window.location.href = "https://localhost:3000";
@@ -198,6 +211,10 @@ export default function Exchange() {
       <p>Amount Fuel Remaining: {amountRemainingFuel}</p>      
 	  <p>Percent Fuel Remaining: {percentRemainingFuel}</p>
 	  <p>Range Fuel: {rangeFuel}</p>
+
+      <button onClick={onGetCharge}>Get Charge</button>
+      <p>Is Plugged In: {isPluggedIn}</p>      
+	  <p>Charge State: {chargeState}</p>
 
       <button onClick={onStartOver}>Start Over</button>
     </>
