@@ -47,7 +47,8 @@ const smartcar = {
 	getBattery,
 	getOdometer,
 	getVehicleAttributes,
-	getTirePressure
+	getTirePressure,
+    getFuel
 };
 
 export function getVin(accessToken, id){
@@ -134,6 +135,26 @@ export function getVehicleAttributes(accessToken, id){
 export function getTirePressure(accessToken, id){
     return new Promise(function(resolve, reject){
         var url = process.env.NEXT_PUBLIC_API_SERVICE + 'smartcar/vehicles/' + id + '/tires/pressure';
+        var bearerToken = "Bearer " + accessToken;
+        var headers = {
+            "Authorization" : bearerToken
+        };
+        var options = {
+            method: 'GET',
+            url: url,
+            headers: headers
+        };
+        axios(options).then(function(response){
+            resolve(response.data);
+        }).catch(function(err){
+            reject(err);
+        }); 
+    });
+}
+
+export function getFuel(accessToken, id){
+    return new Promise(function(resolve, reject){
+        var url = process.env.NEXT_PUBLIC_API_SERVICE + 'smartcar/vehicles/' + id + '/fuel';
         var bearerToken = "Bearer " + accessToken;
         var headers = {
             "Authorization" : bearerToken

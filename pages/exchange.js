@@ -33,6 +33,12 @@ export default function Exchange() {
   const [frontRight, setFrontRight] = useState(null);
   const [backLeft, setBackLeft] = useState(null);
   const [backRight, setBackRight] = useState(null);
+  const [amountRemaining, setAmountRemaining] = useState(null);
+
+
+    const [amountRemainingFuel, setAmountRemainingFuel] = useState(null);
+    const [percentRemainingFuel, setPercentRemainingFuel] = useState(null);
+    const [rangeFuel, setRangeFuel] = useState(null);
   
 
   useEffect(() => {
@@ -135,6 +141,20 @@ export default function Exchange() {
     });
   }
 
+
+  const onGetFuel = () => {
+    smartcarService.getFuel(accessToken, vehicle).then(function(result){
+        setAmountRemainingFuel(result.amountRemaining);
+		setPercentRemainingFuel(result.percentRemaining);
+		setRangeFuel(result.range);
+        console.log(result);
+    }).catch(function(err){
+        console.log(err);
+    });
+  }
+
+
+
   const onStartOver = () => {
       window.location.href = "https://localhost:3000";
   }
@@ -173,6 +193,11 @@ export default function Exchange() {
 	  <p>Front Right: {frontRight}</p>
 	  <p>Back Left: {backLeft}</p>
 	  <p>Back Right: {backRight}</p>
+
+      <button onClick={onGetFuel}>Get Fuel</button>
+      <p>Amount Fuel Remaining: {amountRemainingFuel}</p>      
+	  <p>Percent Fuel Remaining: {percentRemainingFuel}</p>
+	  <p>Range Fuel: {rangeFuel}</p>
 
       <button onClick={onStartOver}>Start Over</button>
     </>
