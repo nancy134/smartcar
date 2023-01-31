@@ -49,7 +49,8 @@ const smartcar = {
 	getVehicleAttributes,
 	getTirePressure,
 	getFuel,
-	getCharge
+	getCharge,
+	getPermissions
 };
 
 export function getVin(accessToken, id){
@@ -193,6 +194,25 @@ export function getCharge(accessToken, id){
     });
 }
 
+export function getPermissions(accessToken, id){
+    return new Promise(function(resolve, reject){
+        var url = process.env.NEXT_PUBLIC_API_SERVICE + 'smartcar/vehicles/' + id + '/permissions';
+        var bearerToken = "Bearer " + accessToken;
+        var headers = {
+            "Authorization" : bearerToken
+        };
+        var options = {
+            method: 'GET',
+            url: url,
+            headers: headers
+        };
+        axios(options).then(function(response){
+            resolve(response.data);
+        }).catch(function(err){
+            reject(err);
+        }); 
+    });
+}
 
 export default smartcar;
 

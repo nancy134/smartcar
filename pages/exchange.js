@@ -42,7 +42,7 @@ export default function Exchange() {
     const [isPluggedIn, setIsPluggedIn] = useState(null);
     const [chargeState, setChargeState] = useState(null);
 
-
+    const [permissions, setPermissions] = useState(null);
 
   useEffect(() => {
       if (router.isReady){
@@ -167,6 +167,14 @@ export default function Exchange() {
     });
   }
 
+  const onGetPermissions = () => {
+    smartcarService.getPermissions(accessToken, vehicle).then(function(result){
+        setPermissions(result.permissions);
+        console.log(result);
+    }).catch(function(err){
+        console.log(err);
+    });
+  }
 
   const onStartOver = () => {
       window.location.href = "https://localhost:3000";
@@ -215,6 +223,10 @@ export default function Exchange() {
       <button onClick={onGetCharge}>Get Charge</button>
       <p>Is Plugged In: {isPluggedIn}</p>      
 	  <p>Charge State: {chargeState}</p>
+
+      <button onClick={onGetPermissions}>Get Permissions</button>
+      <p>Permissions: {permissions}</p>      
+	  
 
       <button onClick={onStartOver}>Start Over</button>
     </>
