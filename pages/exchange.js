@@ -4,6 +4,7 @@ import smartcarService from '../services/smartcar';
 import { 
     useRouter,
 } from 'next/router';
+
 import {
     useState,
     useEffect
@@ -34,15 +35,14 @@ export default function Exchange() {
   const [backLeft, setBackLeft] = useState(null);
   const [backRight, setBackRight] = useState(null);
   const [amountRemaining, setAmountRemaining] = useState(null);
+  const [amountRemainingFuel, setAmountRemainingFuel] = useState(null);
+  const [percentRemainingFuel, setPercentRemainingFuel] = useState(null);
+  const [rangeFuel, setRangeFuel] = useState(null);
+  const [isPluggedIn, setIsPluggedIn] = useState(null);
+  const [chargeState, setChargeState] = useState(null);
+  const [permissions, setPermissions] = useState(null);
+  const [chargeStatus, setChargeStatus] = useState(null);
 
-
-    const [amountRemainingFuel, setAmountRemainingFuel] = useState(null);
-    const [percentRemainingFuel, setPercentRemainingFuel] = useState(null);
-    const [rangeFuel, setRangeFuel] = useState(null);
-    const [isPluggedIn, setIsPluggedIn] = useState(null);
-    const [chargeState, setChargeState] = useState(null);
-
-    const [permissions, setPermissions] = useState(null);
 
   useEffect(() => {
       if (router.isReady){
@@ -176,6 +176,21 @@ export default function Exchange() {
     });
   }
 
+  const onControlCharge = () => {
+    var body = {
+	    action: "START"
+	}
+    smartcarService.controlCharge(accessToken, vehicle, body).then(function(result){
+
+        setChargeStatus(result.status);
+        console.log(result);
+    }).catch(function(err){
+        console.log(err);
+    });
+  }
+
+  
+
   const onStartOver = () => {
       window.location.href = "https://localhost:3000";
   }
@@ -186,19 +201,19 @@ export default function Exchange() {
       <p>refresh token: {refreshToken}</p>
       <p>expiration: {expiration}</p>
       <p>refreshExpiration: {refreshExpiration}</p>
+
       <button onClick={onGetVehicles}>Get Vehicles</button>
       <p>{ vehicle }</p>
+
       <button onClick={onGetLocation}>Get Location</button>
       <p>latitude: {latitude} longitude: {longitude}</p>
 
       <button onClick={onGetVin}>Get Vin</button>
       <p>VIN: {vin}</p>
 
-
       <button onClick={onGetBattery}>Get Battery</button>
       <p>Percent Remaining: {percentRemaining}</p>
 	  <p>Range: {range}</p>
-
 
       <button onClick={onGetOdometer}>Get Odometer</button>
       <p>Distance: {distance}</p>
@@ -226,8 +241,11 @@ export default function Exchange() {
 
       <button onClick={onGetPermissions}>Get Permissions</button>
       <p>Permissions: {permissions}</p>      
-	  
 
+      <button onClick={onControlCharge}>Control Charge</button>
+      <p>Charge Status: {chargeStatus}</p>      
+
+	  
       <button onClick={onStartOver}>Start Over</button>
     </>
   );
