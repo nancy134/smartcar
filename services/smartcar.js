@@ -51,8 +51,10 @@ const smartcar = {
 	getFuel,
 	getCharge,
 	getPermissions,
-	controlCharge
+	controlCharge,
+	controlSecurity
 };
+
 
 export function getVin(accessToken, id){
     return new Promise(function(resolve, reject){
@@ -237,6 +239,26 @@ export function controlCharge(accessToken, id, body){
     });
 }
 
+export function controlSecurity(accessToken, id, body){
+    return new Promise(function(resolve, reject){
+        var url = process.env.NEXT_PUBLIC_API_SERVICE + 'smartcar/vehicles/' + id + '/security';
+        var bearerToken = "Bearer " + accessToken;
+        var headers = {
+            "Authorization" : bearerToken
+        };
+        var options = {
+            method: 'POST',
+            url: url,
+            headers: headers,
+			data: body
+        };
+        axios(options).then(function(response){
+            resolve(response.data);
+        }).catch(function(err){
+            reject(err);
+        }); 
+    });
+}
 
 export default smartcar;
 

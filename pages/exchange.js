@@ -42,7 +42,7 @@ export default function Exchange() {
   const [chargeState, setChargeState] = useState(null);
   const [permissions, setPermissions] = useState(null);
   const [chargeStatus, setChargeStatus] = useState(null);
-
+  const [securityStatus, setSecurityStatus] = useState(null);
 
   useEffect(() => {
       if (router.isReady){
@@ -189,7 +189,18 @@ export default function Exchange() {
     });
   }
 
-  
+  const onControlSecurity = () => {
+    var body = {
+	    action: "LOCK"
+	}
+    smartcarService.controlSecurity(accessToken, vehicle, body).then(function(result){
+        setSecurityStatus(result.status);
+        console.log(result);
+    }).catch(function(err){
+        console.log(err);
+    });
+  }
+
 
   const onStartOver = () => {
       window.location.href = "https://localhost:3000";
@@ -245,6 +256,8 @@ export default function Exchange() {
       <button onClick={onControlCharge}>Control Charge</button>
       <p>Charge Status: {chargeStatus}</p>      
 
+      <button onClick={onControlSecurity}>Control Security</button>
+      <p>Security Status: {securityStatus}</p>  
 	  
       <button onClick={onStartOver}>Start Over</button>
     </>
