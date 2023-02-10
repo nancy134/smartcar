@@ -44,6 +44,7 @@ export default function Exchange() {
   const [chargeStatus, setChargeStatus] = useState(null);
   const [securityStatus, setSecurityStatus] = useState(null);
   const [oilLifeRemaining, setOilLifeRemaining] = useState(null);
+  const [batteryCapacity, setBatteryCapacity] = useState(null);
 
 
   useEffect(() => {
@@ -213,6 +214,14 @@ export default function Exchange() {
     });
   }
 
+  const onGetBatteryCapacity = () => {
+    smartcarService.getBatteryCapacity(accessToken, vehicle).then(function(result){
+        setBatteryCapacity(result.capacity);
+        console.log(result);
+    }).catch(function(err){
+        console.log(err);
+    });
+  }
 
 
   const onStartOver = () => {
@@ -274,6 +283,9 @@ export default function Exchange() {
 
       <button onClick={onGetEngineOil}>Get Engine Oil</button>
       <p>Engine Oil Life: {oilLifeRemaining}</p>
+
+      <button onClick={onGetBatteryCapacity}>Get Battery Capacity</button>
+      <p>Battery Capacity: {batteryCapacity}</p>      
 	  
       <button onClick={onStartOver}>Start Over</button>
     </>
