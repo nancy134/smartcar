@@ -43,6 +43,8 @@ export default function Exchange() {
   const [permissions, setPermissions] = useState(null);
   const [chargeStatus, setChargeStatus] = useState(null);
   const [securityStatus, setSecurityStatus] = useState(null);
+  const [oilLifeRemaining, setOilLifeRemaining] = useState(null);
+
 
   useEffect(() => {
       if (router.isReady){
@@ -193,6 +195,7 @@ export default function Exchange() {
     var body = {
 	    action: "LOCK"
 	}
+
     smartcarService.controlSecurity(accessToken, vehicle, body).then(function(result){
         setSecurityStatus(result.status);
         console.log(result);
@@ -200,6 +203,16 @@ export default function Exchange() {
         console.log(err);
     });
   }
+
+  const onGetEngineOil = () => {
+    smartcarService.getEngineOil(accessToken, vehicle).then(function(result){
+        setOilLifeRemaining(result.lifeRemaining);
+        console.log(result);
+    }).catch(function(err){
+        console.log(err);
+    });
+  }
+
 
 
   const onStartOver = () => {
@@ -258,6 +271,9 @@ export default function Exchange() {
 
       <button onClick={onControlSecurity}>Control Security</button>
       <p>Security Status: {securityStatus}</p>  
+
+      <button onClick={onGetEngineOil}>Get Engine Oil</button>
+      <p>Engine Oil Life: {oilLifeRemaining}</p>
 	  
       <button onClick={onStartOver}>Start Over</button>
     </>
