@@ -45,6 +45,7 @@ export default function Exchange() {
   const [securityStatus, setSecurityStatus] = useState(null);
   const [oilLifeRemaining, setOilLifeRemaining] = useState(null);
   const [batteryCapacity, setBatteryCapacity] = useState(null);
+  const [userId, setUserId] = useState(null);
 
 
   useEffect(() => {
@@ -223,6 +224,14 @@ export default function Exchange() {
     });
   }
 
+  const onGetUser = () => {
+    smartcarService.getUser(accessToken).then(function(result){
+        setUserId(result.id);
+        console.log(result);
+    }).catch(function(err){
+        console.log(err);
+    });
+  }
 
   const onStartOver = () => {
       window.location.href = "https://localhost:3000";
@@ -286,7 +295,10 @@ export default function Exchange() {
 
       <button onClick={onGetBatteryCapacity}>Get Battery Capacity</button>
       <p>Battery Capacity: {batteryCapacity}</p>      
-	  
+
+      <button onClick={onGetUser}>Get User</button>
+      <p>Security Status: {userId}</p>      
+
       <button onClick={onStartOver}>Start Over</button>
     </>
   );

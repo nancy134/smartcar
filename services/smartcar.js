@@ -54,7 +54,8 @@ const smartcar = {
 	controlCharge,
 	controlSecurity,
 	getEngineOil,
-	getBatteryCapacity
+	getBatteryCapacity,
+	getUser
 };
 
 
@@ -286,6 +287,27 @@ export function getEngineOil(accessToken, id){
 export function getBatteryCapacity(accessToken, id){
     return new Promise(function(resolve, reject){
         var url = process.env.NEXT_PUBLIC_API_SERVICE + 'smartcar/vehicles/' + id + '/battery/capacity';
+        var bearerToken = "Bearer " + accessToken;
+        var headers = {
+            "Authorization" : bearerToken
+        };
+        var options = {
+            method: 'GET',
+            url: url,
+            headers: headers
+        };
+        axios(options).then(function(response){
+            resolve(response.data);
+        }).catch(function(err){
+            reject(err);
+        }); 
+    });
+}
+
+
+export function getUser(accessToken){
+    return new Promise(function(resolve, reject){
+        var url = process.env.NEXT_PUBLIC_API_SERVICE + 'smartcar/user';
         var bearerToken = "Bearer " + accessToken;
         var headers = {
             "Authorization" : bearerToken
