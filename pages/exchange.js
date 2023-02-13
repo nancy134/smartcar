@@ -246,6 +246,9 @@ export default function Exchange() {
 
       <button onClick={onGetVehicles}>Get Vehicles</button>
       <p>{ vehicle }</p>
+      { vehicle ?
+      <div>
+
 
       <button onClick={onGetLocation}>Get Location</button>
       <p>latitude: {latitude} longitude: {longitude}</p>
@@ -294,7 +297,10 @@ export default function Exchange() {
       <p>Engine Oil Life: {oilLifeRemaining}</p>
 
       <button onClick={onGetBatteryCapacity}>Get Battery Capacity</button>
-      <p>Battery Capacity: {batteryCapacity}</p>      
+      <p>Battery Capacity: {batteryCapacity}</p>
+      </div>
+      : null }
+    
 
       <button onClick={onGetUser}>Get User</button>
       <p>Security Status: {userId}</p>      
