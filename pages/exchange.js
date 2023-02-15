@@ -245,13 +245,15 @@ export default function Exchange() {
       <p>refreshExpiration: {refreshExpiration}</p>
 
       <button onClick={onGetVehicles}>Get Vehicles</button>
-      <p>{ vehicle }</p>
       { vehicle ?
       <div>
-
+      <select name="cars" id="cars">
       { vehicles.map((v) => (
-       <div>{v}</div>
-       ))}  
+	  
+       <option>{v}</option>
+       ))}
+       </select>
+
        
       <button onClick={onGetLocation}>Get Location</button>
       <p>latitude: {latitude} longitude: {longitude}</p>
