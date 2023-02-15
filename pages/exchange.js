@@ -75,7 +75,7 @@ export default function Exchange() {
   const onGetVehicles = () => {
       smartcarService.getVehicles(accessToken).then(function(result){
           console.log(result);
-          setVehicles(result);
+          setVehicles(result.vehicles);
           if (result.vehicles && result.vehicles[0]){
               setVehicle(result.vehicles[0]);
           }
@@ -249,7 +249,10 @@ export default function Exchange() {
       { vehicle ?
       <div>
 
-
+      { vehicles.map((v) => (
+       <div>{v}</div>
+       ))}  
+       
       <button onClick={onGetLocation}>Get Location</button>
       <p>latitude: {latitude} longitude: {longitude}</p>
 
