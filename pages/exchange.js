@@ -233,6 +233,14 @@ export default function Exchange() {
     });
   }
 
+
+  const onSelectCar = (e) => {
+    console.log(e.target.value);
+    setVehicle(e.target.value);  
+}
+
+
+
   const onStartOver = () => {
       window.location.href = "https://localhost:3000";
   }
@@ -247,7 +255,8 @@ export default function Exchange() {
       <button onClick={onGetVehicles}>Get Vehicles</button>
       { vehicle ?
       <div>
-      <select name="cars" id="cars">
+      <select name="cars" id="cars" onChange={onSelectCar}>
+	  
       { vehicles.map((v) => (
 	  
        <option>{v}</option>
