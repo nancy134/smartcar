@@ -56,7 +56,8 @@ const smartcar = {
 	getEngineOil,
 	getBatteryCapacity,
 	getUser,
-    getTeslaCompass
+    getTeslaCompass,
+    getTeslaChargeAmperage
 };
 
 
@@ -347,6 +348,25 @@ export function getTeslaCompass(accessToken, id){
     });
 }
 
+export function getTeslaChargeAmperage(accessToken, id){
+    return new Promise(function(resolve, reject){
+        var url = process.env.NEXT_PUBLIC_API_SERVICE + 'smartcar/vehicles/' + id + '/tesla/charge/ammeter';
+        var bearerToken = "Bearer " + accessToken;
+        var headers = {
+            "Authorization" : bearerToken
+        };
+        var options = {
+            method: 'GET',
+            url: url,
+            headers: headers
+        };
+        axios(options).then(function(response){
+            resolve(response.data);
+        }).catch(function(err){
+            reject(err);
+        });
+    });
+}
 
 export default smartcar;
 

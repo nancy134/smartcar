@@ -47,7 +47,7 @@ export default function Exchange() {
   const [batteryCapacity, setBatteryCapacity] = useState(null);
   const [userId, setUserId] = useState(null);
   const [direction, setDirection] = useState(null);
-  const [heading, setHeading] = useState(null);
+  const [amperage, setAmperage] = useState(null);
 
 
   useEffect(() => {
@@ -246,6 +246,15 @@ export default function Exchange() {
     });
   }
 
+  const onGetTeslaChargeAmperage = () => {
+    smartcarService.getTeslaChargeAmperage(accessToken, vehicle).then(function(result){
+        setAmperage(result.amperage);
+        console.log(result);
+    }).catch(function(err){
+        console.log(err);
+    });
+  }
+  
 
   const onSelectCar = (e) => {
     console.log(e.target.value);
@@ -334,7 +343,10 @@ export default function Exchange() {
 
       <button onClick={onGetTeslaCompass}>Get Tesla Compass</button>
       <p>Direction: {direction}</p>
-      <p>Heading: {heading}</p>
+ 
+
+      <button onClick={onGetTeslaChargeAmperage}>Get Tesla Charge Amperage</button>
+      <p>Amperage: {amperage}</p>
 
       <button onClick={onStartOver}>Start Over</button>
     </>
