@@ -46,6 +46,8 @@ export default function Exchange() {
   const [oilLifeRemaining, setOilLifeRemaining] = useState(null);
   const [batteryCapacity, setBatteryCapacity] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [direction, setDirection] = useState(null);
+  const [heading, setHeading] = useState(null);
 
 
   useEffect(() => {
@@ -234,6 +236,17 @@ export default function Exchange() {
   }
 
 
+  const onGetTeslaCompass = () => {
+    smartcarService.getTeslaCompass(accessToken, vehicle).then(function(result){
+        setDirection(result.direction);
+		setHeading(result.heading);
+        console.log(result);
+    }).catch(function(err){
+        console.log(err);
+    });
+  }
+
+
   const onSelectCar = (e) => {
     console.log(e.target.value);
     setVehicle(e.target.value);  
@@ -318,6 +331,10 @@ export default function Exchange() {
 
       <button onClick={onGetUser}>Get User</button>
       <p>Security Status: {userId}</p>      
+
+      <button onClick={onGetTeslaCompass}>Get Tesla Compass</button>
+      <p>Direction: {direction}</p>
+      <p>Heading: {heading}</p>
 
       <button onClick={onStartOver}>Start Over</button>
     </>
