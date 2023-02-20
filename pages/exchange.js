@@ -64,6 +64,7 @@ export default function Exchange() {
   const [readVin, setReadVin] = useState(null);
   const [readSpeedometer, setReadSpeedometer] = useState(null);
   const [readTires, setReadTires] = useState(null);
+  const [vehicleMakes, setVehicleMakes] = useState(null);
 
 
   useEffect(() => {
@@ -143,6 +144,7 @@ const onGetTokens = () => {
             
          getMakes(result1.accessToken, result2.vehicles).then(function(makes){console.log(makes);
                     setVehicle(result2.vehicles[0]);
+                    setVehicleMakes(makes);
 
                     smartcarService.getPermissions(result1.accessToken, result2.vehicles[0]).then(function(result3){
                         setPermissions(result3.permissions);
@@ -393,9 +395,12 @@ const onGetTokens = () => {
       <p>
       <span>Select Vehicle: </span>
       <select name="cars" id="cars" onChange={onSelectCar}>
-      { vehicles.map((v) => (
-       <option value={v} key={v}>{v}</option>
+
+      {vehicleMakes.map((v) => (
+       <option value={v.id} key={v.id}>{v.model}</option>
        ))}
+
+
        </select>
        </p>
 
