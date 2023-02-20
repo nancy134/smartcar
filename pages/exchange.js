@@ -13,7 +13,7 @@ import {
 // pages/exchange.js
 export default function Exchange() {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  const [initialized, setInitialized] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
   const [expiration, setExpiration] = useState(null);
@@ -49,6 +49,22 @@ export default function Exchange() {
   const [direction, setDirection] = useState(null);
   const [amperage, setAmperage] = useState(null);
 
+  // Permissions
+  const [readCompass, setReadCompass] = useState(null);
+  const [readEngineOil, setReadEngineOil] = useState(null);
+  const [readBattery, setReadBattery] = useState(null);
+  const [readCharge, setReadCharge] = useState(null);
+  const [controlCharge, setControlCharge] = useState(null);
+  const [readThermometer, setReadThermometer] = useState(null);
+  const [controlSecurity, setControlSecurity] = useState(null);
+  const [readFuel, setReadFuel] = useState(null);
+  const [readLocation, setReadLocation] = useState(null);
+  const [readOdometer, setReadOdometer] = useState(null);
+  const [readVehicleInfo, setReadVehicleInfo] = useState(null);
+  const [readVin, setReadVin] = useState(null);
+  const [readSpeedometer, setReadSpeedometer] = useState(null);
+  const [readTires, setReadTires] = useState(null);
+
 
   useEffect(() => {
       if (router.isReady){
@@ -58,17 +74,75 @@ export default function Exchange() {
       }
   },[router.isReady]);
 
+  const setPermission = (p) => {
+      if      (p === 'read_compass') setReadCompass(true);
+      else if (p === 'read_engine_oil') setReadEngineOil(true);
+      else if (p === 'read_battery') setReadBattery(true);
+      else if (p === 'read_charge') setReadCharge(true);
+      else if (p === 'control_charge') setControlCharge(true);
+      else if (p === 'read_thermometer') setReadThermometer(true);
+      else if (p === 'read_fuel') setReadFuel(true);
+      else if (p === 'read_location') setReadLocation(true);
+      else if (p === 'control_security') setControlSecurity(true);
+      else if (p === 'read_odometer') setReadOdometer(true);
+      else if (p === 'read_speedometer') setReadOdometer(true);
+      else if (p === 'read_tires') setReadTires(true);
+      else if (p === 'read_vehicle_info') setReadVehicleInfo(true);
+      else if (p === 'read_vin') setReadVin(true);
+  }
+
+  const clearPermissions = () => {
+      setReadCompass(null);
+      setReadEngineOil(null);
+      setReadBattery(null);
+      setReadCharge(null);
+      setControlCharge(null);
+      setReadThermometer(null);
+      setReadFuel(null);
+      setReadLocation(null);
+      setControlSecurity(null);
+      setReadOdometer(null);
+      setReadOdometer(null);
+      setReadTires(null);
+      setReadVehicleInfo(null);
+      setReadVin(null);
+  }
+
   const onGetTokens = () => {
       var body = {
           code: router.query.code 
       }
-      authService.getSmartcarTokens(body).then(function(result){
-          setLoading(false);
-          setAccessToken(result.accessToken);
-          setRefreshToken(result.refreshToken);
-          setExpiration(result.expiration);
-          setRefreshExpiration(result.refreshExpiration);
-          console.log(result);
+      authService.getSmartcarTokens(body).then(function(result1){
+          setAccessToken(result1.accessToken);
+          setRefreshToken(result1.refreshToken);
+          setExpiration(result1.expiration);
+          setRefreshExpiration(result1.refreshExpiration);
+          console.log(result1);
+          smartcarService.getVehicles(result1.accessToken).then(function(result2){
+              console.log(result2);
+              setVehicles(result2.vehicles);
+              if (result2.vehicles && result2.vehicles[0]){
+                  setVehicle(result2.vehicles[0]);
+
+                  smartcarService.getPermissions(result1.accessToken, result2.vehicles[0]).then(function(result3){
+                      setPermissions(result3.permissions);
+                      for (var i=0; i<result3.permissions.length; i++){
+                          console.log(result3.permissions[i]);
+                          var p = result3.permissions[i];
+                          setPermission(p);
+                      }
+                      console.log(result3);
+                      setInitialized(true);
+                  }).catch(function(err){
+                      console.log(err);
+                  });
+              } else {
+                  setInitialized(true);
+              }
+          }).catch(function(err){
+              console.log(err);
+          });
+
       }).catch(function(err){
           console.log(err);
       });
@@ -258,7 +332,21 @@ export default function Exchange() {
 
   const onSelectCar = (e) => {
     console.log(e.target.value);
+    setInitialized(null);
     setVehicle(e.target.value);  
+    clearPermissions();
+    smartcarService.getPermissions(accessToken, e.target.value).then(function(result3){
+        setPermissions(result3.permissions);
+        for (var i=0; i<result3.permissions.length; i++){
+            console.log(result3.permissions[i]);
+            var p = result3.permissions[i];
+            setPermission(p);
+        }
+        console.log(result3);
+        setInitialized(true);
+    }).catch(function(err){
+        console.log(err);
+    });
 }
 
 
@@ -269,69 +357,116 @@ export default function Exchange() {
   return (
     <>
       <h1>Smartcar functions</h1>
+      { initialized ?
+      <div>
       <p>access token: {accessToken}</p>
       <p>refresh token: {refreshToken}</p>
       <p>expiration: {expiration}</p>
       <p>refreshExpiration: {refreshExpiration}</p>
 
-      <button onClick={onGetVehicles}>Get Vehicles</button>
       { vehicle ?
       <div>
+
+      <p>
+      <span>Select Vehicle: </span>
       <select name="cars" id="cars" onChange={onSelectCar}>
-	  
       { vehicles.map((v) => (
-	  
-       <option>{v}</option>
+       <option value={v} key={v}>{v}</option>
        ))}
        </select>
+       </p>
 
-       
+      { readLocation ?
+      <div>
       <button onClick={onGetLocation}>Get Location</button>
       <p>latitude: {latitude} longitude: {longitude}</p>
+      </div>
+      : null }
 
+      { readVin ?
+      <div>
       <button onClick={onGetVin}>Get Vin</button>
       <p>VIN: {vin}</p>
+      </div>
+      : null }
 
+      { readBattery ?
+      <div>
       <button onClick={onGetBattery}>Get Battery</button>
       <p>Percent Remaining: {percentRemaining}</p>
-	  <p>Range: {range}</p>
+      <p>Range: {range}</p>
+      </div>
+      : null }
 
+      { readOdometer ?
+      <div>
       <button onClick={onGetOdometer}>Get Odometer</button>
       <p>Distance: {distance}</p>
+      </div>
+      : null }
 
+      { readVehicleInfo ?
+      <div>
       <button onClick={onGetVehicleAttributes}>Get Vehicle Attributes</button>
       <p>Id: {id}</p>      
-	  <p>Make: {make}</p>
-	  <p>Model: {model}</p>
-	  <p>Year: {year}</p>
+      <p>Make: {make}</p>
+      <p>Model: {model}</p>
+      <p>Year: {year}</p>
+      </div>
+      : null }
 
+      { readTires ?
+      <div>
       <button onClick={onGetTirePressure}>Get TirePressure</button>
       <p>Front Left: {frontLeft}</p>      
-	  <p>Front Right: {frontRight}</p>
-	  <p>Back Left: {backLeft}</p>
-	  <p>Back Right: {backRight}</p>
+      <p>Front Right: {frontRight}</p>
+      <p>Back Left: {backLeft}</p>
+      <p>Back Right: {backRight}</p>
+      </div>
+      : null }
 
+      { readFuel ?
+      <div>
       <button onClick={onGetFuel}>Get Fuel</button>
       <p>Amount Fuel Remaining: {amountRemainingFuel}</p>      
-	  <p>Percent Fuel Remaining: {percentRemainingFuel}</p>
-	  <p>Range Fuel: {rangeFuel}</p>
+      <p>Percent Fuel Remaining: {percentRemainingFuel}</p>
+      <p>Range Fuel: {rangeFuel}</p>
+      </div>
+      : null }
 
+ 
+      { readCharge ?
+      <div>
       <button onClick={onGetCharge}>Get Charge</button>
       <p>Is Plugged In: {isPluggedIn}</p>      
-	  <p>Charge State: {chargeState}</p>
+      <p>Charge State: {chargeState}</p>
+      </div>
+      : null }
 
-      <button onClick={onGetPermissions}>Get Permissions</button>
-      <p>Permissions: {permissions}</p>      
-
+      { controlCharge ?
+      <div>
       <button onClick={onControlCharge}>Control Charge</button>
-      <p>Charge Status: {chargeStatus}</p>      
+      <p>Charge Status: {chargeStatus}</p>
+      </div>
+      : null }
 
+
+      { controlSecurity ?
+      <div>
       <button onClick={onControlSecurity}>Control Security</button>
       <p>Security Status: {securityStatus}</p>  
+      </div>
+      : null }
 
+      { readEngineOil ?
+      <div>
       <button onClick={onGetEngineOil}>Get Engine Oil</button>
       <p>Engine Oil Life: {oilLifeRemaining}</p>
+      </div>
+      : null }
 
+      { readBattery ?
+      <div>
       <button onClick={onGetBatteryCapacity}>Get Battery Capacity</button>
       <p>Battery Capacity: {batteryCapacity}</p>
       </div>
@@ -339,16 +474,29 @@ export default function Exchange() {
     
 
       <button onClick={onGetUser}>Get User</button>
-      <p>Security Status: {userId}</p>      
+      <p>User id: {userId}</p>      
 
+      { readCompass ?
+      <div>
       <button onClick={onGetTeslaCompass}>Get Tesla Compass</button>
       <p>Direction: {direction}</p>
+      </div>
+      : null }
  
-
+      { readCharge ?
+      <div>
       <button onClick={onGetTeslaChargeAmperage}>Get Tesla Charge Amperage</button>
       <p>Amperage: {amperage}</p>
+      </div>
+      : null }
 
+      </div>
+      : null }
+      </div>
+
+      : null }
       <button onClick={onStartOver}>Start Over</button>
+
     </>
   );
 }
