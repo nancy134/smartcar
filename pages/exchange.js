@@ -108,45 +108,68 @@ export default function Exchange() {
       setReadVin(null);
   }
 
-  const onGetTokens = () => {
-      var body = {
-          code: router.query.code 
-      }
-      authService.getSmartcarTokens(body).then(function(result1){
-          setAccessToken(result1.accessToken);
-          setRefreshToken(result1.refreshToken);
-          setExpiration(result1.expiration);
-          setRefreshExpiration(result1.refreshExpiration);
-          console.log(result1);
-          smartcarService.getVehicles(result1.accessToken).then(function(result2){
-              console.log(result2);
-              setVehicles(result2.vehicles);
-              if (result2.vehicles && result2.vehicles[0]){
-                  setVehicle(result2.vehicles[0]);
 
-                  smartcarService.getPermissions(result1.accessToken, result2.vehicles[0]).then(function(result3){
-                      setPermissions(result3.permissions);
-                      for (var i=0; i<result3.permissions.length; i++){
-                          console.log(result3.permissions[i]);
-                          var p = result3.permissions[i];
-                          setPermission(p);
-                      }
-                      console.log(result3);
-                      setInitialized(true);
-                  }).catch(function(err){
-                      console.log(err);
-                  });
-              } else {
-                  setInitialized(true);
-              }
-          }).catch(function(err){
-              console.log(err);
-          });
+  const getMakes = (accessToken, vehicles) => {
 
-      }).catch(function(err){
-          console.log(err);
-      });
-  }
+    return new Promise(function(resolve, reject){
+        var promises = [];
+        for (var i=0; i<vehicles.length; i++){
+            var attributesPromise = smartcarService.getVehicleAttributes(accessToken, vehicles[i]);
+            promises.push(attributesPromise);
+        }
+        Promise.all(promises).then(function(values){
+            resolve(values);
+        }).catch(function(err){
+            reject(err);
+        });
+    });
+}
+
+
+const onGetTokens = () => {
+    var body = {
+        code: router.query.code
+    }
+    authService.getSmartcarTokens(body).then(function(result1){
+        setAccessToken(result1.accessToken);
+        setRefreshToken(result1.refreshToken);
+        setExpiration(result1.expiration);
+        setRefreshExpiration(result1.refreshExpiration);
+        console.log(result1);
+        smartcarService.getVehicles(result1.accessToken).then(function(result2){
+            console.log(result2);
+            setVehicles(result2.vehicles);
+            if (result2.vehicles && result2.vehicles[0]){
+            
+         getMakes(result1.accessToken, result2.vehicles).then(function(makes){console.log(makes);
+                    setVehicle(result2.vehicles[0]);
+
+                    smartcarService.getPermissions(result1.accessToken, result2.vehicles[0]).then(function(result3){
+                        setPermissions(result3.permissions);
+                        for (var i=0; i<result3.permissions.length; i++){
+                            console.log(result3.permissions[i]);
+                            var p = result3.permissions[i];
+                            setPermission(p);
+                        }
+                        console.log(result3);
+                        setInitialized(true);
+                    }).catch(function(err){
+                        console.log(err);
+                    });
+                }).catch(function(err){
+                    console.log(err);
+                });
+            } else {
+                setInitialized(true);
+            }
+        }).catch(function(err){
+            console.log(err);
+        });
+
+    }).catch(function(err){
+        console.log(err);
+    });
+}
 
   const onGetVehicles = () => {
       smartcarService.getVehicles(accessToken).then(function(result){
