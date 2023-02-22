@@ -1,5 +1,6 @@
 import authService from '../services/auth';
 import smartcarService from '../services/smartcar';
+import AccountButton from '../components/AccountButton';
 
 import { 
     useRouter,
@@ -138,6 +139,8 @@ const onGetTokens = () => {
         setRefreshToken(result1.refreshToken);
         setExpiration(result1.expiration);
         setRefreshExpiration(result1.refreshExpiration);
+        setIsLoggedIn(true);
+
         console.log(result1);
         smartcarService.getVehicles(result1.accessToken).then(function(result2){
             console.log(result2);
@@ -384,7 +387,8 @@ const onGetTokens = () => {
   return (
     <>
       <h1>Smartcar functions</h1>
-      { initialized ?
+      { isLoggedIn ?
+
       <div>
       <p>access token: {accessToken}</p>
       <p>refresh token: {refreshToken}</p>
@@ -524,8 +528,10 @@ const onGetTokens = () => {
       : null }
       </div>
 
-      : null }
-      <button onClick={onStartOver}>Start Over</button>
+      :
+	  <AccountButton/>
+	  }
+
 
     </>
   );
