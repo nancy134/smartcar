@@ -402,7 +402,7 @@ const onGetTokens = () => {
       <select name="cars" id="cars" onChange={onSelectCar}>
 
       {vehicleMakes && vehicleMakes.map((v) => (
-       <option value={v.id} key={v.id}>{v.model}</option>
+       <option value={v.id} key={v.id}>{v.year + " " + v.make + " " +v.model }</option>
        ))}
        </select>
        </p>
