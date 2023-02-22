@@ -65,6 +65,8 @@ export default function Exchange() {
   const [readSpeedometer, setReadSpeedometer] = useState(null);
   const [readTires, setReadTires] = useState(null);
   const [vehicleMakes, setVehicleMakes] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
+  const [isCarSelected, setIsCarSelected] = useState(null);
 
 
   useEffect(() => {
@@ -145,6 +147,7 @@ const onGetTokens = () => {
          getMakes(result1.accessToken, result2.vehicles).then(function(makes){console.log(makes);
                     setVehicle(result2.vehicles[0]);
                     setVehicleMakes(makes);
+                    setIsCarSelected(true);
 
                     smartcarService.getPermissions(result1.accessToken, result2.vehicles[0]).then(function(result3){
                         setPermissions(result3.permissions);
@@ -357,8 +360,8 @@ const onGetTokens = () => {
 
   const onSelectCar = (e) => {
     console.log(e.target.value);
-    setInitialized(null);
-    setVehicle(e.target.value);  
+    setVehicle(e.target.value);
+	setIsCarSelected(false);
     clearPermissions();
     smartcarService.getPermissions(accessToken, e.target.value).then(function(result3){
         setPermissions(result3.permissions);
@@ -368,12 +371,11 @@ const onGetTokens = () => {
             setPermission(p);
         }
         console.log(result3);
-        setInitialized(true);
+		setIsCarSelected(true);
     }).catch(function(err){
         console.log(err);
     });
 }
-
 
 
   const onStartOver = () => {
@@ -389,7 +391,7 @@ const onGetTokens = () => {
       <p>expiration: {expiration}</p>
       <p>refreshExpiration: {refreshExpiration}</p>
 
-      { vehicle ?
+      { isCarSelected ?
       <div>
 
       <p>
