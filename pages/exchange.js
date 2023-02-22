@@ -395,22 +395,25 @@ const onGetTokens = () => {
       <p>expiration: {expiration}</p>
       <p>refreshExpiration: {refreshExpiration}</p>
 
-      { isCarSelected ?
-      <div>
+
 
       <p>
       <span>Select Vehicle: </span>
       <select name="cars" id="cars" onChange={onSelectCar}>
 
-      {vehicleMakes.map((v) => (
+      {vehicleMakes && vehicleMakes.map((v) => (
        <option value={v.id} key={v.id}>{v.model}</option>
        ))}
-
-
        </select>
        </p>
 
+      { isCarSelected ?
+      <div>
+
       { readLocation ?
+
+
+
       <div>
       <button onClick={onGetLocation}>Get Location</button>
       <p>latitude: {latitude} longitude: {longitude}</p>
