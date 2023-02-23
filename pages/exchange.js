@@ -110,6 +110,35 @@ export default function Exchange() {
       setReadTires(null);
       setReadVehicleInfo(null);
       setReadVin(null);
+
+      setLatitude(null);
+      setLongitude(null);
+      setVin(null);
+      setPercentRemaining(null);
+      setRange(null);
+      setDistance(null);
+      setId(null);
+      setMake(null);
+      setModel(null);
+      setYear(null);
+      setFrontLeft(null);
+      setFrontRight(null);
+      setBackLeft(null);
+      setBackRight(null);
+      setAmountRemaining(null);
+      setAmountRemainingFuel(null);
+      setPercentRemainingFuel(null);
+      setRangeFuel(null);
+      setIsPluggedIn(null);
+      setChargeState(null);
+      setPermissions(null);
+      setChargeStatus(null);
+      setSecurityStatus(null);
+      setOilLifeRemaining(null);
+      setBatteryCapacity(null);
+      setUserId(null);
+      setDirection(null);
+      setAmperage(null);
   }
 
 
