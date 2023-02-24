@@ -208,6 +208,16 @@ const onGetTokens = () => {
     });
 }
 
+
+const onLogout = () => {
+    setIsLoggedIn(null);
+    setAccessToken(null);
+    setRefreshToken(null);
+    setExpiration(null);
+    setRefreshExpiration(null);
+}
+
+
   const onGetVehicles = () => {
       smartcarService.getVehicles(accessToken).then(function(result){
           console.log(result);
@@ -422,7 +432,10 @@ const onGetTokens = () => {
       <p>access token: {accessToken}</p>
       <p>refresh token: {refreshToken}</p>
       <p>expiration: {expiration}</p>
+
       <p>refreshExpiration: {refreshExpiration}</p>
+	  <button onClick={onLogout}>Logout</button>
+
 
 
 
