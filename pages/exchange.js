@@ -1,5 +1,6 @@
 import authService from '../services/auth';
 import smartcarService from '../services/smartcar';
+import googleService from '../services/google';
 import AccountButton from '../components/AccountButton';
 
 import { 
@@ -231,14 +232,19 @@ const onLogout = () => {
   }
 
   const onGetLocation = () => {
-      smartcarService.getLocation(accessToken, vehicle).then(function(result){
-          setLatitude(result.latitude);
-          setLongitude(result.longitude);
-          console.log(result);
-      }).catch(function(err){
-          console.log(err);
-      });
-  }
+    smartcarService.getLocation(accessToken, vehicle).then(function(result){
+        setLatitude(result.latitude);
+        setLongitude(result.longitude);
+        console.log(result);
+        googleService.getPlace(result.latitude, result.longitude).then(function(place){
+            console.log(place);
+        }).catch(function(err){
+            console.log(err);
+        });
+    }).catch(function(err){
+        console.log(err);
+    });
+}
 
   const onGetVin = () => {
     smartcarService.getVin(accessToken, vehicle).then(function(result){
