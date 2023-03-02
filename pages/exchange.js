@@ -24,6 +24,10 @@ export default function Exchange() {
   const [vehicle, setVehicle] = useState(null);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+  const [placeName, setPlaceName] = useState(null);
+  const [placeType, setPlaceType] = useState(null);
+  const [placeBusinessStatus, setPlaceBusinessStatus] = useState(null);
+  const [placeId, setPlaceId] = useState(null);
   const [vin, setVin] = useState(null);
   const [percentRemaining, setPercentRemaining] = useState(null);
   const [range, setRange] = useState(null);
@@ -236,8 +240,23 @@ const onLogout = () => {
         setLatitude(result.latitude);
         setLongitude(result.longitude);
         console.log(result);
-        googleService.getPlace(result.latitude, result.longitude).then(function(place){
-            console.log(place);
+        googleService.getPlace(result.latitude, result.longitude).then(function(places){
+            console.log(places);
+			if (places.status === 'OK'){
+				if (places.results.length > 0){
+					setPlaceName(places.results[0].name);
+                    setPlaceType(places.results[0].types[0]);
+					setPlaceBusinessStatus(places.results[0].business_status);
+
+                    var placeId = "https://www.google.com/maps/search/?api=1&query_place_id="+places.results[0].place_id;
+					setPlaceId(placeId);
+
+				} else {
+					setPlaceName("No place found");
+                }
+			} else {
+				setPlaceName("No place found");
+			}
         }).catch(function(err){
             console.log(err);
         });
@@ -461,11 +480,15 @@ const onLogout = () => {
       { readLocation ?
 
 
-
       <div>
       <button onClick={onGetLocation}>Get Location</button>
       <p>latitude: {latitude} longitude: {longitude}</p>
+      <p>Place name: {placeName}</p>
+      <p>Place type: {placeType}</p>
+      <p>Place business status: {placeBusinessStatus}</p>
+      <p><a href={placeId} target="_blank">View in Google Map</a></p>
       </div>
+
       : null }
 
       { readVin ?
