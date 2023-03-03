@@ -2,6 +2,7 @@ import authService from '../services/auth';
 import smartcarService from '../services/smartcar';
 import googleService from '../services/google';
 import AccountButton from '../components/AccountButton';
+import {Button} from 'react-bootstrap';
 
 import { 
     useRouter,
@@ -334,7 +335,10 @@ const onLogout = () => {
 
   const onGetCharge = () => {
     smartcarService.getCharge(accessToken, vehicle).then(function(result){
-        setIsPluggedIn(result.isPluggedIn);
+        if (result.isPluggedIn)
+        setIsPluggedIn("true");
+    else
+        setIsPluggedIn("false");
 		setChargeState(result.state);
         console.log(result);
     }).catch(function(err){
