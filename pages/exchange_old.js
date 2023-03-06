@@ -485,7 +485,21 @@ const onLogout = () => {
       { isCarSelected ?
       <div>
 
+<Card>
+	      <Card.Body>
+		      <Card.Title>Title</Card.Title>
+			  <Card.Text>
+			  Card Text
+			  </Card.Text>
+			  <Button variant="primary">
+			  Button
+			  </Button>
+		  </Card.Body>
+	  </Card>
+
       { readLocation ?
+
+
       <div>
       <button onClick={onGetLocation}>Get Location</button>
       <p>latitude: {latitude} longitude: {longitude}</p>
@@ -494,9 +508,10 @@ const onLogout = () => {
       <p>Place business status: {placeBusinessStatus}</p>
       <p><a href={placeId} target="_blank">View in Google Map</a></p>
       </div>
+
       : null }
 
-      { readVin ?
+{ readVin ?
       <Card>
 	      <Card.Body>
 		      <Card.Title>VIN</Card.Title>
@@ -510,7 +525,8 @@ const onLogout = () => {
 	  </Card>
       : null }
 
-      { readBattery ?
+
+{ readBattery ?
       <Card>
 	      <Card.Body>
 		      <Card.Title>Battery</Card.Title>
@@ -527,7 +543,7 @@ const onLogout = () => {
 
 
 
-      { readOdometer ?
+{ readOdometer ?
       <Card>
 	      <Card.Body>
 		      <Card.Title>Odometer</Card.Title>
@@ -540,6 +556,9 @@ const onLogout = () => {
 		  </Card.Body>
 	  </Card>
       : null }
+
+
+
 
       { readVehicleInfo ?
       <Card>
@@ -561,11 +580,19 @@ const onLogout = () => {
       </Card>
       : null }
 
+
+
+
+
+
+
     { readTires ?
     <Card>
     <Card.Body>
     <Card.Title>Tire Pressure</Card.Title>
     <Card.Text>
+    
+      
       <p>Front Left: {frontLeft}</p>      
       <p>Front Right: {frontRight}</p>
       <p>Back Left: {backLeft}</p>
@@ -576,6 +603,8 @@ const onLogout = () => {
       </Card.Body>
       </Card>
       : null }
+
+
 
       { readFuel ?
   
@@ -699,12 +728,18 @@ const onLogout = () => {
       </Card>
       : null }
 
-    </div>
-    : null }
-    </div>
-    :
+</div>
+</>
+</div>
+: null }
+</div>
+
+:
     <AccountButton/>
     }
+
+
 </>
   );
+}
 }
