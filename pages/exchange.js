@@ -1,5 +1,5 @@
 import authService from '../services/auth';
-import smartcarService, { getUser } from '../services/smartcar';
+import smartcarService, { getLocation, getUser } from '../services/smartcar';
 import googleService from '../services/google';
 import AccountButton from '../components/AccountButton';
 import {
@@ -485,16 +485,24 @@ const onLogout = () => {
       { isCarSelected ?
       <div>
 
+
       { readLocation ?
-      <div>
-      <button onClick={onGetLocation}>Get Location</button>
-      <p>latitude: {latitude} longitude: {longitude}</p>
-      <p>Place name: {placeName}</p>
-      <p>Place type: {placeType}</p>
-      <p>Place business status: {placeBusinessStatus}</p>
-      <p><a href={placeId} target="_blank">View in Google Map</a></p>
-      </div>
+      <Card>
+      <Card.Body>
+          <Card.Title>Get Location</Card.Title>
+          <Card.Text>
+            
+
+   
+      <Button onClick={getLocation}variant="primary">
+			  Get Location
+			  </Button>
+              </Card.Text>
+		  </Card.Body>
+	  </Card>
       : null }
+
+
 
       { readVin ?
       <Card>
