@@ -2,11 +2,13 @@ import authService from '../services/auth';
 import smartcarService, { getLocation, getUser } from '../services/smartcar';
 import googleService from '../services/google';
 import AccountButton from '../components/AccountButton';
+
 import {
     Button,
-	Card
+    Card,
+	Form,
+	Container
 } from 'react-bootstrap';
-
 
 import { 
     useRouter,
@@ -457,30 +459,35 @@ const onLogout = () => {
       window.location.href = "https://localhost:3000";
   }
   return (
-    <>
+
+       
+    <Container>
+
       <h1>Smartcar functions</h1>
       { isLoggedIn ?
 
       <div>
-      <p>access token: {accessToken}</p>
-      <p>refresh token: {refreshToken}</p>
-      <p>expiration: {expiration}</p>
 
-      <p>refreshExpiration: {refreshExpiration}</p>
-	  <button onClick={onLogout}>Logout</button>
+ <Card>
+      <Card.Body>
+          <Card.Title>Login Info</Card.Title>
+          <Card.Text>
+              <p>access token: {accessToken}</p>
+              <p>refresh token: {refreshToken}</p>
+              <p>expiration: {expiration}</p>
+              <p>refreshExpiration: {refreshExpiration}</p>
+              <Button variant="primary" onClick={onLogout}>Logout</Button>
+              </Card.Text>
+		  </Card.Body>
+	  </Card>
+	  
 
-
-
-
-      <p>
-      <span>Select Vehicle: </span>
-      <select name="cars" id="cars" onChange={onSelectCar}>
+      <Form.Select onChange={onSelectCar}>
 
       {vehicleMakes && vehicleMakes.map((v) => (
        <option value={v.id} key={v.id}>{v.year + " " + v.make + " " +v.model }</option>
        ))}
-       </select>
-       </p>
+       </Form.Select>
 
       { isCarSelected ?
       <div>
@@ -713,6 +720,6 @@ const onLogout = () => {
     :
     <AccountButton/>
     }
-</>
+</Container>
   );
 }
