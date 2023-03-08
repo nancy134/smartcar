@@ -468,7 +468,7 @@ const onLogout = () => {
 
       <div>
 
- <Card>
+ <Card className="m-2">
       <Card.Body>
           <Card.Title>Login Info</Card.Title>
           <Card.Text>
@@ -494,7 +494,7 @@ const onLogout = () => {
 
 
       { readLocation ?
-      <Card>
+      <Card className="m-2">
       <Card.Body>
           <Card.Title>Get Location</Card.Title>
           <Card.Text>
@@ -512,7 +512,7 @@ const onLogout = () => {
 
 
       { readVin ?
-      <Card>
+      <Card className="m-2">
 	      <Card.Body>
 		      <Card.Title>VIN</Card.Title>
 			  <Card.Text>
@@ -526,7 +526,7 @@ const onLogout = () => {
       : null }
 
       { readBattery ?
-      <Card>
+      <Card className="m-2">
 	      <Card.Body>
 		      <Card.Title>Battery</Card.Title>
 			  <Card.Text>
@@ -543,7 +543,7 @@ const onLogout = () => {
 
 
       { readOdometer ?
-      <Card>
+      <Card className="m-2">
 	      <Card.Body>
 		      <Card.Title>Odometer</Card.Title>
 			  <Card.Text>
@@ -557,7 +557,7 @@ const onLogout = () => {
       : null }
 
       { readVehicleInfo ?
-      <Card>
+      <Card className="m-2">
       <Card.Body>
           <Card.Title>Vehicle Attributes</Card.Title>
           <Card.Text>
@@ -577,7 +577,7 @@ const onLogout = () => {
       : null }
 
     { readTires ?
-    <Card>
+    <Card className="m-2">
     <Card.Body>
     <Card.Title>Tire Pressure</Card.Title>
     <Card.Text>
@@ -594,7 +594,7 @@ const onLogout = () => {
 
       { readFuel ?
   
-    <Card>
+    <Card className="m-2">
     <Card.Body>
     <Card.Title>Get Fuel</Card.Title>
     <Card.Text>
@@ -611,7 +611,7 @@ const onLogout = () => {
 
  
       { readCharge ?
-     <Card>
+     <Card className="m-2">
      <Card.Body>
      <Card.Title>Read Charge</Card.Title>
      <Card.Text>
@@ -625,7 +625,7 @@ const onLogout = () => {
 
 
       { controlCharge ?
-        <Card>
+        <Card className="m-2">
         <Card.Body>
         <Card.Title>Control Charge</Card.Title>
         <Card.Text>
@@ -638,7 +638,7 @@ const onLogout = () => {
 
 
       { controlSecurity ?
-        <Card>
+        <Card className="m-2">
         <Card.Body>
         <Card.Title>Control Security</Card.Title>
         <Card.Text>
@@ -651,7 +651,7 @@ const onLogout = () => {
 
 
       { readEngineOil ?
-        <Card>
+        <Card className="m-2">
         <Card.Body>
         <Card.Title>Get Engine Oil</Card.Title>
         <Card.Text>
@@ -663,7 +663,7 @@ const onLogout = () => {
       : null }
 
       { readBattery ?
-        <Card>
+        <Card className="m-2">
         <Card.Body>
         <Card.Title>Get Battery Capacity</Card.Title>
         <Card.Text>
@@ -676,7 +676,7 @@ const onLogout = () => {
       : null }
     
     {getUser ?
-    <Card>
+    <Card className="m-2">
     <Card.Body>
     <Card.Title>Get User</Card.Title>
     <Card.Text>
@@ -689,7 +689,7 @@ const onLogout = () => {
 
 
       { readCompass ?
-    <Card>
+    <Card className="m-2">
     <Card.Body>
     <Card.Title>Get Tesla Compass</Card.Title>
     <Card.Text>
@@ -702,7 +702,7 @@ const onLogout = () => {
 
  
     { readCharge ?
-    <Card>
+    <Card className="m-2">
     <Card.Body>
     <Card.Title>Read Charge</Card.Title>
     <Card.Text>
