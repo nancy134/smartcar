@@ -7,7 +7,9 @@ import {
     Button,
     Card,
 	Form,
-	Container
+    Container,
+    Navbar,
+    Nav
 } from 'react-bootstrap';
 
 import { 
@@ -460,10 +462,32 @@ const onLogout = () => {
   }
   return (
 
+    <Container>
+    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Container>
+        <Navbar.Brand href="#home">Murban</Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto">
+          <Nav.Link href="#home">Location</Nav.Link>
+          <Nav.Link href="#features">VIN</Nav.Link>
+          <Nav.Link href="#Battery">Battery</Nav.Link>
+          <Nav.Link href="#Odometer">Odometer</Nav.Link>
+          <Nav.Link href="#Attributes">Attributes</Nav.Link>
+          <Nav.Link href="#TirePressure">Tire Pressure</Nav.Link>
+          <Nav.Link href="#Charge">Charge</Nav.Link>
+          <Nav.Link href="#Security">Security</Nav.Link>
+          <Nav.Link href="#User">User</Nav.Link>
+          <Nav.Link href="#TeslaAmp">Tesla Amperage</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+
        
     <Container>
 
-      <h1>Smartcar functions</h1>
+      
       { isLoggedIn ?
 
       <div>
@@ -493,21 +517,23 @@ const onLogout = () => {
       <div>
 
 
-      { readLocation ?
+{ readLocation ?
       <Card className="m-2">
       <Card.Body>
           <Card.Title>Get Location</Card.Title>
           <Card.Text>
-            
-
-   
-      <Button onClick={getLocation}variant="primary">
-			  Get Location
-			  </Button>
-              </Card.Text>
-		  </Card.Body>
-	  </Card>
+     <p>latitude: {latitude} longitude: {longitude}</p>
+      <p>Place name: {placeName}</p>
+      <p>Place type: {placeType}</p>
+      <p>Place business status: {placeBusinessStatus}</p>
+      <p><a href={placeId} target="_blank">View in Google Map</a></p>
+      <Button onClick={onGetLocation}variant="primary">
+                          Get Location
+                          </Button>
+              </Card.Text>                  </Card.Body>
+          </Card>
       : null }
+
 
 
 
@@ -721,5 +747,5 @@ const onLogout = () => {
     <AccountButton/>
     }
 </Container>
-  );
+</Container>  );
 }
