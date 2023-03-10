@@ -471,43 +471,43 @@ const onLogout = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
         
-        { location ?
+        { readLocation ?
           <Nav.Link href="#location">Location</Nav.Link>
         : null }
 
-        { VIN ?
+        { readVin ?
           <Nav.Link href="#VIN">VIN</Nav.Link>
         : null }
 
-        { Battery ?
+        { readBattery ?
           <Nav.Link href="#Battery">Battery</Nav.Link>
         : null }
 
-        { Odometer ?
+        { readOdometer ?
           <Nav.Link href="#Odometer">Odometer</Nav.Link>
         : null }
 
-        { Attributes ?
+        { readVehicleInfo ?
           <Nav.Link href="#Attributes">Attributes</Nav.Link>
         : null }
 
-        {TirePressure ?
+        { readTires ?
           <Nav.Link href="#TirePressure">Tire Pressure</Nav.Link>
         : null }
 
-        {Charge ?
+        { readCharge ?
           <Nav.Link href="#Charge">Charge</Nav.Link>
         : null }
 
-        {Security ?
+        { controlSecurity ?
           <Nav.Link href="#Security">Security</Nav.Link>
         : null }
 
-        {User ?
+        { getUser ?
           <Nav.Link href="#User">User</Nav.Link>
         : null }
 
-        {TeslaAmp ?
+        { readCharge ?
           <Nav.Link href="#TeslaAmp">Tesla Amperage</Nav.Link>
         : null }
         
