@@ -155,7 +155,6 @@ export default function Exchange() {
       setAmperage(null);
   }
 
-
   const getMakes = (accessToken, vehicles) => {
 
     return new Promise(function(resolve, reject){
@@ -463,13 +462,13 @@ const onLogout = () => {
   return (
 
     <Container>
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-    <Navbar fixed="top" />
+    <Navbar collapseOnSelect sticky="top" expand="lg" bg="dark" variant="dark">
+
       <Container>
         <Navbar.Brand href="#home">Murban</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
+        <Nav className="me-auto">
         
         { readLocation ?
           <Nav.Link href="#location">Location</Nav.Link>
@@ -510,7 +509,7 @@ const onLogout = () => {
         { readCharge ?
           <Nav.Link href="#TeslaAmp">Tesla Amperage</Nav.Link>
         : null }
-        
+
           </Nav>
         </Navbar.Collapse>
       </Container>
