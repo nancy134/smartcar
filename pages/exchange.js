@@ -464,21 +464,53 @@ const onLogout = () => {
 
     <Container>
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar fixed="top" />
       <Container>
         <Navbar.Brand href="#home">Murban</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-          <Nav.Link href="#home">Location</Nav.Link>
-          <Nav.Link href="#features">VIN</Nav.Link>
+        
+        { location ?
+          <Nav.Link href="#location">Location</Nav.Link>
+        : null }
+
+        { VIN ?
+          <Nav.Link href="#VIN">VIN</Nav.Link>
+        : null }
+
+        { Battery ?
           <Nav.Link href="#Battery">Battery</Nav.Link>
+        : null }
+
+        { Odometer ?
           <Nav.Link href="#Odometer">Odometer</Nav.Link>
+        : null }
+
+        { Attributes ?
           <Nav.Link href="#Attributes">Attributes</Nav.Link>
+        : null }
+
+        {TirePressure ?
           <Nav.Link href="#TirePressure">Tire Pressure</Nav.Link>
+        : null }
+
+        {Charge ?
           <Nav.Link href="#Charge">Charge</Nav.Link>
+        : null }
+
+        {Security ?
           <Nav.Link href="#Security">Security</Nav.Link>
+        : null }
+
+        {User ?
           <Nav.Link href="#User">User</Nav.Link>
+        : null }
+
+        {TeslaAmp ?
           <Nav.Link href="#TeslaAmp">Tesla Amperage</Nav.Link>
+        : null }
+        
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -518,7 +550,7 @@ const onLogout = () => {
 
 
 { readLocation ?
-      <Card className="m-2">
+      <Card className="m-2" id="location">
       <Card.Body>
           <Card.Title>Get Location</Card.Title>
           <Card.Text>
@@ -538,7 +570,7 @@ const onLogout = () => {
 
 
       { readVin ?
-      <Card className="m-2">
+      <Card className="m-2" id="VIN">
 	      <Card.Body>
 		      <Card.Title>VIN</Card.Title>
 			  <Card.Text>
@@ -552,7 +584,7 @@ const onLogout = () => {
       : null }
 
       { readBattery ?
-      <Card className="m-2">
+      <Card className="m-2" id="Battery">
 	      <Card.Body>
 		      <Card.Title>Battery</Card.Title>
 			  <Card.Text>
@@ -569,7 +601,7 @@ const onLogout = () => {
 
 
       { readOdometer ?
-      <Card className="m-2">
+      <Card className="m-2" id="Odometer">
 	      <Card.Body>
 		      <Card.Title>Odometer</Card.Title>
 			  <Card.Text>
@@ -583,7 +615,7 @@ const onLogout = () => {
       : null }
 
       { readVehicleInfo ?
-      <Card className="m-2">
+      <Card className="m-2" id="Attributes">
       <Card.Body>
           <Card.Title>Vehicle Attributes</Card.Title>
           <Card.Text>
@@ -603,7 +635,7 @@ const onLogout = () => {
       : null }
 
     { readTires ?
-    <Card className="m-2">
+    <Card className="m-2" id="TirePressure">
     <Card.Body>
     <Card.Title>Tire Pressure</Card.Title>
     <Card.Text>
@@ -620,7 +652,7 @@ const onLogout = () => {
 
       { readFuel ?
   
-    <Card className="m-2">
+    <Card className="m-2" id="Charge">
     <Card.Body>
     <Card.Title>Get Fuel</Card.Title>
     <Card.Text>
@@ -637,7 +669,7 @@ const onLogout = () => {
 
  
       { readCharge ?
-     <Card className="m-2">
+     <Card className="m-2" id="Charge">
      <Card.Body>
      <Card.Title>Read Charge</Card.Title>
      <Card.Text>
@@ -664,7 +696,7 @@ const onLogout = () => {
 
 
       { controlSecurity ?
-        <Card className="m-2">
+        <Card className="m-2" id="Security">
         <Card.Body>
         <Card.Title>Control Security</Card.Title>
         <Card.Text>
@@ -702,7 +734,7 @@ const onLogout = () => {
       : null }
     
     {getUser ?
-    <Card className="m-2">
+    <Card className="m-2" id="User">
     <Card.Body>
     <Card.Title>Get User</Card.Title>
     <Card.Text>
