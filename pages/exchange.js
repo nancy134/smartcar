@@ -6,7 +6,7 @@ import AccountButton from '../components/AccountButton';
 import {
     Button,
     Card,
-	Form,
+    Form,
     Container,
     Navbar,
     Nav
@@ -23,280 +23,273 @@ import {
 
 // pages/exchange.js
 export default function Exchange() {
-  const router = useRouter();
-  const [initialized, setInitialized] = useState(null);
-  const [accessToken, setAccessToken] = useState(null);
-  const [refreshToken, setRefreshToken] = useState(null);
-  const [expiration, setExpiration] = useState(null);
-  const [refreshExpiration, setRefreshExpiration] = useState(null);
-  const [vehicles, setVehicles] = useState(null);
-  const [vehicle, setVehicle] = useState(null);
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
-  const [placeName, setPlaceName] = useState(null);
-  const [placeType, setPlaceType] = useState(null);
-  const [placeBusinessStatus, setPlaceBusinessStatus] = useState(null);
-  const [placeId, setPlaceId] = useState(null);
-  const [vin, setVin] = useState(null);
-  const [percentRemaining, setPercentRemaining] = useState(null);
-  const [range, setRange] = useState(null);
-  const [distance, setDistance] = useState(null);
-  const [id, setId] = useState(null);
-  const [make, setMake] = useState(null);
-  const [model, setModel] = useState(null);
-  const [year, setYear] = useState(null);
-  const [frontLeft, setFrontLeft] = useState(null);
-  const [frontRight, setFrontRight] = useState(null);
-  const [backLeft, setBackLeft] = useState(null);
-  const [backRight, setBackRight] = useState(null);
-  const [amountRemaining, setAmountRemaining] = useState(null);
-  const [amountRemainingFuel, setAmountRemainingFuel] = useState(null);
-  const [percentRemainingFuel, setPercentRemainingFuel] = useState(null);
-  const [rangeFuel, setRangeFuel] = useState(null);
-  const [isPluggedIn, setIsPluggedIn] = useState(null);
-  const [chargeState, setChargeState] = useState(null);
-  const [permissions, setPermissions] = useState(null);
-  const [chargeStatus, setChargeStatus] = useState(null);
-  const [securityStatus, setSecurityStatus] = useState(null);
-  const [oilLifeRemaining, setOilLifeRemaining] = useState(null);
-  const [batteryCapacity, setBatteryCapacity] = useState(null);
-  const [userId, setUserId] = useState(null);
-  const [direction, setDirection] = useState(null);
-  const [amperage, setAmperage] = useState(null);
+    const router = useRouter();
+    const [initialized, setInitialized] = useState(null);
+    const [accessToken, setAccessToken] = useState(null);
+    const [refreshToken, setRefreshToken] = useState(null);
+    const [expiration, setExpiration] = useState(null);
+    const [refreshExpiration, setRefreshExpiration] = useState(null);
+    const [vehicles, setVehicles] = useState(null);
+    const [vehicle, setVehicle] = useState(null);
+    const [latitude, setLatitude] = useState(null);
+    const [longitude, setLongitude] = useState(null);
+    const [placeName, setPlaceName] = useState(null);
+    const [placeType, setPlaceType] = useState(null);
+    const [placeBusinessStatus, setPlaceBusinessStatus] = useState(null);
+    const [placeId, setPlaceId] = useState(null);
+    const [vin, setVin] = useState(null);
+    const [percentRemaining, setPercentRemaining] = useState(null);
+    const [range, setRange] = useState(null);
+    const [distance, setDistance] = useState(null);
+    const [id, setId] = useState(null);
+    const [make, setMake] = useState(null);
+    const [model, setModel] = useState(null);
+    const [year, setYear] = useState(null);
+    const [frontLeft, setFrontLeft] = useState(null);
+    const [frontRight, setFrontRight] = useState(null);
+    const [backLeft, setBackLeft] = useState(null);
+    const [backRight, setBackRight] = useState(null);
+    const [amountRemaining, setAmountRemaining] = useState(null);
+    const [amountRemainingFuel, setAmountRemainingFuel] = useState(null);
+    const [percentRemainingFuel, setPercentRemainingFuel] = useState(null);
+    const [rangeFuel, setRangeFuel] = useState(null);
+    const [isPluggedIn, setIsPluggedIn] = useState(null);
+    const [chargeState, setChargeState] = useState(null);
+    const [permissions, setPermissions] = useState(null);
+    const [chargeStatus, setChargeStatus] = useState(null);
+    const [securityStatus, setSecurityStatus] = useState(null);
+    const [oilLifeRemaining, setOilLifeRemaining] = useState(null);
+    const [batteryCapacity, setBatteryCapacity] = useState(null);
+    const [userId, setUserId] = useState(null);
+    const [direction, setDirection] = useState(null);
+    const [amperage, setAmperage] = useState(null);
 
-  // Permissions
-  const [readCompass, setReadCompass] = useState(null);
-  const [readEngineOil, setReadEngineOil] = useState(null);
-  const [readBattery, setReadBattery] = useState(null);
-  const [readCharge, setReadCharge] = useState(null);
-  const [controlCharge, setControlCharge] = useState(null);
-  const [readThermometer, setReadThermometer] = useState(null);
-  const [controlSecurity, setControlSecurity] = useState(null);
-  const [readFuel, setReadFuel] = useState(null);
-  const [readLocation, setReadLocation] = useState(null);
-  const [readOdometer, setReadOdometer] = useState(null);
-  const [readVehicleInfo, setReadVehicleInfo] = useState(null);
-  const [readVin, setReadVin] = useState(null);
-  const [readSpeedometer, setReadSpeedometer] = useState(null);
-  const [readTires, setReadTires] = useState(null);
-  const [vehicleMakes, setVehicleMakes] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(null);
-  const [isCarSelected, setIsCarSelected] = useState(null);
+    // Permissions
+    const [readCompass, setReadCompass] = useState(null);
+    const [readEngineOil, setReadEngineOil] = useState(null);
+    const [readBattery, setReadBattery] = useState(null);
+    const [readCharge, setReadCharge] = useState(null);
+    const [controlCharge, setControlCharge] = useState(null);
+    const [readThermometer, setReadThermometer] = useState(null);
+    const [controlSecurity, setControlSecurity] = useState(null);
+    const [readFuel, setReadFuel] = useState(null);
+    const [readLocation, setReadLocation] = useState(null);
+    const [readOdometer, setReadOdometer] = useState(null);
+    const [readVehicleInfo, setReadVehicleInfo] = useState(null);
+    const [readVin, setReadVin] = useState(null);
+    const [readSpeedometer, setReadSpeedometer] = useState(null);
+    const [readTires, setReadTires] = useState(null);
+    const [vehicleMakes, setVehicleMakes] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(null);
+    const [isCarSelected, setIsCarSelected] = useState(null);
 
 
-  useEffect(() => {
-      if (router.isReady){
-          onGetTokens();
-      } else {
-          return;
-      }
-  },[router.isReady]);
-
-  const setPermission = (p) => {
-      if      (p === 'read_compass') setReadCompass(true);
-      else if (p === 'read_engine_oil') setReadEngineOil(true);
-      else if (p === 'read_battery') setReadBattery(true);
-      else if (p === 'read_charge') setReadCharge(true);
-      else if (p === 'control_charge') setControlCharge(true);
-      else if (p === 'read_thermometer') setReadThermometer(true);
-      else if (p === 'read_fuel') setReadFuel(true);
-      else if (p === 'read_location') setReadLocation(true);
-      else if (p === 'control_security') setControlSecurity(true);
-      else if (p === 'read_odometer') setReadOdometer(true);
-      else if (p === 'read_speedometer') setReadOdometer(true);
-      else if (p === 'read_tires') setReadTires(true);
-      else if (p === 'read_vehicle_info') setReadVehicleInfo(true);
-      else if (p === 'read_vin') setReadVin(true);
-  }
-
-  const clearPermissions = () => {
-      setReadCompass(null);
-      setReadEngineOil(null);
-      setReadBattery(null);
-      setReadCharge(null);
-      setControlCharge(null);
-      setReadThermometer(null);
-      setReadFuel(null);
-      setReadLocation(null);
-      setControlSecurity(null);
-      setReadOdometer(null);
-      setReadOdometer(null);
-      setReadTires(null);
-      setReadVehicleInfo(null);
-      setReadVin(null);
-
-      setLatitude(null);
-      setLongitude(null);
-      setVin(null);
-      setPercentRemaining(null);
-      setRange(null);
-      setDistance(null);
-      setId(null);
-      setMake(null);
-      setModel(null);
-      setYear(null);
-      setFrontLeft(null);
-      setFrontRight(null);
-      setBackLeft(null);
-      setBackRight(null);
-      setAmountRemaining(null);
-      setAmountRemainingFuel(null);
-      setPercentRemainingFuel(null);
-      setRangeFuel(null);
-      setIsPluggedIn(null);
-      setChargeState(null);
-      setPermissions(null);
-      setChargeStatus(null);
-      setSecurityStatus(null);
-      setOilLifeRemaining(null);
-      setBatteryCapacity(null);
-      setUserId(null);
-      setDirection(null);
-      setAmperage(null);
-  }
-
-  const getMakes = (accessToken, vehicles) => {
-
-    return new Promise(function(resolve, reject){
-        var promises = [];
-        for (var i=0; i<vehicles.length; i++){
-            var attributesPromise = smartcarService.getVehicleAttributes(accessToken, vehicles[i]);
-            promises.push(attributesPromise);
+    useEffect(() => {
+    const onGetTokens = () => {
+        var body = {
+            code: router.query.code
         }
-        Promise.all(promises).then(function(values){
-            resolve(values);
-        }).catch(function(err){
-            reject(err);
-        });
-    });
-}
-
-
-const onGetTokens = () => {
-    var body = {
-        code: router.query.code
-    }
-    authService.getSmartcarTokens(body).then(function(result1){
-        setAccessToken(result1.accessToken);
-        setRefreshToken(result1.refreshToken);
-        setExpiration(result1.expiration);
-        setRefreshExpiration(result1.refreshExpiration);
-        setIsLoggedIn(true);
-
-        console.log(result1);
-        smartcarService.getVehicles(result1.accessToken).then(function(result2){
-            console.log(result2);
-            setVehicles(result2.vehicles);
-            if (result2.vehicles && result2.vehicles[0]){
-            
-         getMakes(result1.accessToken, result2.vehicles).then(function(makes){console.log(makes);
-                    setVehicle(result2.vehicles[0]);
-                    setVehicleMakes(makes);
-                    setIsCarSelected(true);
-
-                    smartcarService.getPermissions(result1.accessToken, result2.vehicles[0]).then(function(result3){
-                        setPermissions(result3.permissions);
-                        for (var i=0; i<result3.permissions.length; i++){
-                            console.log(result3.permissions[i]);
-                            var p = result3.permissions[i];
-                            setPermission(p);
-                        }
-                        console.log(result3);
-                        setInitialized(true);
+        authService.getSmartcarTokens(body).then(function(result1){
+            setAccessToken(result1.accessToken);
+            setRefreshToken(result1.refreshToken);
+            setExpiration(result1.expiration);
+            setRefreshExpiration(result1.refreshExpiration);
+            setIsLoggedIn(true);
+            console.log(result1);
+            smartcarService.getVehicles(result1.accessToken).then(function(result2){
+                console.log(result2);
+                setVehicles(result2.vehicles);
+                if (result2.vehicles && result2.vehicles[0]){
+                    getMakes(result1.accessToken, result2.vehicles).then(function(makes){console.log(makes);
+                        setVehicle(result2.vehicles[0]);
+                        setVehicleMakes(makes);
+                        setIsCarSelected(true);
+                        smartcarService.getPermissions(result1.accessToken, result2.vehicles[0]).then(function(result3){
+                            setPermissions(result3.permissions);
+                            for (var i=0; i<result3.permissions.length; i++){
+                                console.log(result3.permissions[i]);
+                                var p = result3.permissions[i];
+                                setPermission(p);
+                            }
+                            console.log(result3);
+                            setInitialized(true);
+                        }).catch(function(err){
+                            console.log(err);
+                        });
                     }).catch(function(err){
                         console.log(err);
                     });
-                }).catch(function(err){
-                    console.log(err);
-                });
-            } else {
-                setInitialized(true);
+                } else {
+                    setInitialized(true);
+                }
+            }).catch(function(err){
+                console.log(err);
+            });
+        }).catch(function(err){
+            console.log(err);
+        });
+    }
+
+        if (router.isReady){
+            onGetTokens();
+        } else {
+            return;
+        }
+    },[router.isReady]);
+
+    const setPermission = (p) => {
+        if      (p === 'read_compass') setReadCompass(true);
+        else if (p === 'read_engine_oil') setReadEngineOil(true);
+        else if (p === 'read_battery') setReadBattery(true);
+        else if (p === 'read_charge') setReadCharge(true);
+        else if (p === 'control_charge') setControlCharge(true);
+        else if (p === 'read_thermometer') setReadThermometer(true);
+        else if (p === 'read_fuel') setReadFuel(true);
+        else if (p === 'read_location') setReadLocation(true);
+        else if (p === 'control_security') setControlSecurity(true);
+        else if (p === 'read_odometer') setReadOdometer(true);
+        else if (p === 'read_speedometer') setReadOdometer(true);
+        else if (p === 'read_tires') setReadTires(true);
+        else if (p === 'read_vehicle_info') setReadVehicleInfo(true);
+        else if (p === 'read_vin') setReadVin(true);
+    }
+
+    const clearPermissions = () => {
+        setReadCompass(null);
+        setReadEngineOil(null);
+        setReadBattery(null);
+        setReadCharge(null);
+        setControlCharge(null);
+        setReadThermometer(null);
+        setReadFuel(null);
+        setReadLocation(null);
+        setControlSecurity(null);
+        setReadOdometer(null);
+        setReadOdometer(null);
+        setReadTires(null);
+        setReadVehicleInfo(null);
+        setReadVin(null);
+
+        setLatitude(null);
+        setLongitude(null);
+        setVin(null);
+        setPercentRemaining(null);
+        setRange(null);
+        setDistance(null);
+        setId(null);
+        setMake(null);
+        setModel(null);
+        setYear(null);
+        setFrontLeft(null);
+        setFrontRight(null);
+        setBackLeft(null);
+        setBackRight(null);
+        setAmountRemaining(null);
+        setAmountRemainingFuel(null);
+        setPercentRemainingFuel(null);
+        setRangeFuel(null);
+        setIsPluggedIn(null);
+        setChargeState(null);
+        setPermissions(null);
+        setChargeStatus(null);
+        setSecurityStatus(null);
+        setOilLifeRemaining(null);
+        setBatteryCapacity(null);
+        setUserId(null);
+        setDirection(null);
+        setAmperage(null);
+    }
+
+    const getMakes = (accessToken, vehicles) => {
+
+        return new Promise(function(resolve, reject){
+            var promises = [];
+            for (var i=0; i<vehicles.length; i++){
+                var attributesPromise = smartcarService.getVehicleAttributes(accessToken, vehicles[i]);
+                promises.push(attributesPromise);
+            }
+            Promise.all(promises).then(function(values){
+                resolve(values);
+            }).catch(function(err){
+                reject(err);
+            });
+        });
+    }
+
+    const onLogout = () => {
+        setIsLoggedIn(null);
+        setAccessToken(null);
+        setRefreshToken(null);
+        setExpiration(null);
+        setRefreshExpiration(null);
+    }
+
+
+    const onGetVehicles = () => {
+        smartcarService.getVehicles(accessToken).then(function(result){
+            console.log(result);
+            setVehicles(result.vehicles);
+            if (result.vehicles && result.vehicles[0]){
+                setVehicle(result.vehicles[0]);
             }
         }).catch(function(err){
             console.log(err);
         });
+    }
 
-    }).catch(function(err){
-        console.log(err);
-    });
-}
+    const onGetLocation = () => {
+        smartcarService.getLocation(accessToken, vehicle).then(function(result){
+            setLatitude(result.latitude);
+            setLongitude(result.longitude);
+            console.log(result);
+            googleService.getPlace(result.latitude, result.longitude).then(function(places){
+                console.log(places);
+                if (places.status === 'OK'){
+                    if (places.results.length > 0){
+                        setPlaceName(places.results[0].name);
+                        setPlaceType(places.results[0].types[0]);
+                        setPlaceBusinessStatus(places.results[0].business_status);
+                        var placeId = "https://www.google.com/maps/search/?api=1&query_place_id="+places.results[0].place_id;
+                        setPlaceId(placeId);
 
-
-const onLogout = () => {
-    setIsLoggedIn(null);
-    setAccessToken(null);
-    setRefreshToken(null);
-    setExpiration(null);
-    setRefreshExpiration(null);
-}
-
-
-  const onGetVehicles = () => {
-      smartcarService.getVehicles(accessToken).then(function(result){
-          console.log(result);
-          setVehicles(result.vehicles);
-          if (result.vehicles && result.vehicles[0]){
-              setVehicle(result.vehicles[0]);
-          }
-      }).catch(function(err){
-          console.log(err);
-      });
-  }
-
-  const onGetLocation = () => {
-    smartcarService.getLocation(accessToken, vehicle).then(function(result){
-        setLatitude(result.latitude);
-        setLongitude(result.longitude);
-        console.log(result);
-        googleService.getPlace(result.latitude, result.longitude).then(function(places){
-            console.log(places);
-			if (places.status === 'OK'){
-				if (places.results.length > 0){
-					setPlaceName(places.results[0].name);
-                    setPlaceType(places.results[0].types[0]);
-					setPlaceBusinessStatus(places.results[0].business_status);
-
-                    var placeId = "https://www.google.com/maps/search/?api=1&query_place_id="+places.results[0].place_id;
-					setPlaceId(placeId);
-
-				} else {
-					setPlaceName("No place found");
+                    } else {
+                        setPlaceName("No place found");
+                    }
+                } else {
+                    setPlaceName("No place found");
                 }
-			} else {
-				setPlaceName("No place found");
-			}
+            }).catch(function(err){
+                console.log(err);
+            });
         }).catch(function(err){
             console.log(err);
         });
-    }).catch(function(err){
-        console.log(err);
-    });
-}
+    }
 
-  const onGetVin = () => {
-    smartcarService.getVin(accessToken, vehicle).then(function(result){
-        setVin(result.vin);
-        console.log(result);
-    }).catch(function(err){
-        console.log(err);
-    });
-  }
+    const onGetVin = () => {
+        smartcarService.getVin(accessToken, vehicle).then(function(result){
+            setVin(result.vin);
+            console.log(result);
+        }).catch(function(err){
+            console.log(err);
+        });
+    }
   
 
-  const onGetBattery = () => {
-    smartcarService.getBattery(accessToken, vehicle).then(function(result){
-        setPercentRemaining(result.percentRemaining);
-        setRange(result.range);
-        console.log(result);
-    }).catch(function(err){
-        console.log(err);
-    });
-  }
+    const onGetBattery = () => {
+        smartcarService.getBattery(accessToken, vehicle).then(function(result){
+            setPercentRemaining(result.percentRemaining);
+            setRange(result.range);
+            console.log(result);
+        }).catch(function(err){
+            console.log(err);
+        });
+    }
   
-  const onGetOdometer = () => {
-    smartcarService.getOdometer(accessToken, vehicle).then(function(result){
-        setDistance(result.distance);
-        console.log(result);
+    const onGetOdometer = () => {
+        smartcarService.getOdometer(accessToken, vehicle).then(function(result){
+            setDistance(result.distance);
+            console.log(result);
     }).catch(function(err){
         console.log(err);
     });
