@@ -135,7 +135,7 @@ export default function Exchange() {
         } else {
             return;
         }
-    },[router.isReady]);
+    },[router.isReady, router.query.code]);
 
     const setPermission = (p) => {
         if      (p === 'read_compass') setReadCompass(true);
