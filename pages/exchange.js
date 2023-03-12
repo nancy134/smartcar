@@ -550,7 +550,7 @@ export default function Exchange() {
       <p>Place name: {placeName}</p>
       <p>Place type: {placeType}</p>
       <p>Place business status: {placeBusinessStatus}</p>
-      <p><a href={placeId} target="_blank">View in Google Map</a></p>
+      <p><a href={placeId} rel="noreferrer" target="_blank">View in Google Map</a></p>
       <Button onClick={onGetLocation}variant="primary">
                           Get Location
                           </Button>

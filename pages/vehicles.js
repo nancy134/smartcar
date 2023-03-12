@@ -53,7 +53,7 @@ export default function Exchange() {
   }
 
   return (
-    <>
+    <div>
       <h1>Login page</h1>
       <p>
           Go to this page after logging in
@@ -66,7 +66,7 @@ export default function Exchange() {
       <button onClick={onGetVehicles}>Get Vehicles</button>
       { vehicles }
      
-    </>
+    <div/>
   );
 }
 
