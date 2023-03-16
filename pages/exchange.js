@@ -2,13 +2,15 @@ import authService from '../services/auth';
 import smartcarService, { getLocation, getUser } from '../services/smartcar';
 import googleService from '../services/google';
 import AccountButton from '../components/AccountButton';
+
 import {
     Button,
     Card,
     Form,
     Container,
     Navbar,
-    Nav
+    Nav,
+    Spinner
 } from 'react-bootstrap';
 
 import { 
@@ -36,14 +38,19 @@ export default function Exchange() {
     const [placeType, setPlaceType] = useState(null);
     const [placeBusinessStatus, setPlaceBusinessStatus] = useState(null);
     const [placeId, setPlaceId] = useState(null);
+    const [locationLoading, setLocationLoading] = useState(false);
     const [vin, setVin] = useState(null);
+    const [vinLoading, setVinLoading] = useState(false);
     const [percentRemaining, setPercentRemaining] = useState(null);
     const [range, setRange] = useState(null);
+    const [batteryLoading, setBatteryLoading] = useState(false);
     const [distance, setDistance] = useState(null);
+    const [odometerLoading, setOdometerLoading] = useState(false);
     const [id, setId] = useState(null);
     const [make, setMake] = useState(null);
     const [model, setModel] = useState(null);
     const [year, setYear] = useState(null);
+    const [attributesLoading, setAttributesLoading] = useState(false);
     const [frontLeft, setFrontLeft] = useState(null);
     const [frontRight, setFrontRight] = useState(null);
     const [backLeft, setBackLeft] = useState(null);
@@ -237,6 +244,7 @@ export default function Exchange() {
     }
 
     const onGetLocation = () => {
+        setLocationLoading(true);
         smartcarService.getLocation(accessToken, vehicle).then(function(result){
             setLatitude(result.latitude);
             setLongitude(result.longitude);
@@ -257,55 +265,75 @@ export default function Exchange() {
                 } else {
                     setPlaceName("No place found");
                 }
+                setLocationLoading(false);
             }).catch(function(err){
+                setLocationLoading(false);
                 console.log(err);
             });
         }).catch(function(err){
+            setLocationLoading(false);
             console.log(err);
         });
     }
 
-    const onGetVin = () => {
-        smartcarService.getVin(accessToken, vehicle).then(function(result){
-            setVin(result.vin);
-            console.log(result);
-        }).catch(function(err){
-            console.log(err);
-        });
-    }
+
+     const onGetVin = () => {
+         setVinLoading(true);
+         smartcarService.getVin(accessToken, vehicle).then(function(result){
+             setVinLoading(false);
+             setVin(result.vin);
+             console.log(result);
+         }).catch(function(err){
+             setVinLoading(false);
+             setVin("Error loading VIN");
+             console.log(err);
+         });
+     }
   
 
-    const onGetBattery = () => {
+     const onGetBattery = () => {
+        setBatteryLoading(true)
         smartcarService.getBattery(accessToken, vehicle).then(function(result){
+            setBatteryLoading(false);
             setPercentRemaining(result.percentRemaining);
             setRange(result.range);
             console.log(result);
         }).catch(function(err){
-            console.log(err);
-        });
-    }
-  
-    const onGetOdometer = () => {
-        smartcarService.getOdometer(accessToken, vehicle).then(function(result){
-            setDistance(result.distance);
-            console.log(result);
-        }).catch(function(err){
+            setBatteryLoading(false);
             console.log(err);
         });
     }
 
   
+    const onGetOdometer = () => {
+        setOdometerLoading(true);
+        smartcarService.getOdometer(accessToken, vehicle).then(function(result){
+            setDistance(result.distance);
+            setOdometerLoading(false);
+            console.log(result);
+        }).catch(function(err){
+            setOdometerLoading(false);
+            console.log(err);
+        });
+    }
+
+
+  
     const onGetVehicleAttributes = () => {
+        setAttributesLoading(true);
         smartcarService.getVehicleAttributes(accessToken, vehicle).then(function(result){
             setId(result.id);
             setMake(result.make);
             setModel(result.model);
             setYear(result.year);
+            setAttributesLoading(false);
             console.log(result);
         }).catch(function(err){
+           setAttributesLoading(false);
            console.log(err);
         });
     }
+
 
     const onGetTirePressure = () => {
         smartcarService.getTirePressure(accessToken, vehicle).then(function(result){
@@ -539,9 +567,21 @@ export default function Exchange() {
                         <p>Place type: {placeType}</p>
                         <p>Place business status: {placeBusinessStatus}</p>
                         <p><a href={placeId} rel="noreferrer" target="_blank">View in Google Map</a></p>
+
                         <Button onClick={onGetLocation}variant="primary">
-                          Get Location
-                        </Button>
+                         { locationLoading ?
+                         <Spinner
+                             as="span"
+                             animation="border"
+                             size="sm"
+                             role="status"
+                             aria-hidden="true"
+                         />
+                         :
+                         <span>Get Location</span>
+                         }
+                     </Button>
+
                     </Card.Text>
                 </Card.Body>
             </Card>
@@ -552,7 +592,21 @@ export default function Exchange() {
                 <Card.Body>
                     <Card.Title>VIN</Card.Title>
                     <Card.Text>{vin}</Card.Text>
-                    <Button onClick={onGetVin}variant="primary">Get VIN</Button>
+
+                     <Button onClick={onGetVin}variant="primary">
+                         { vinLoading ?
+                         <Spinner
+                             as="span"
+                             animation="border"
+                             size="sm"
+                             role="status"
+                             aria-hidden="true"
+                         />
+                         :
+                         <span>Get VIN</span>
+                         }
+                     </Button>
+
                 </Card.Body>
             </Card>
             : null }
@@ -565,7 +619,21 @@ export default function Exchange() {
                           <p>Percent Remaining: {percentRemaining}</p>
                           <p>Range: {range}</p>
                       </Card.Text>
-                      <Button onClick={onGetBattery}variant="primary">Get Battery</Button>
+                      
+                      <Button onClick={onGetBattery}variant="primary">
+                         { batteryLoading ?
+                         <Spinner
+                             as="span"
+                             animation="border"
+                             size="sm"
+                             role="status"
+                             aria-hidden="true"
+                         />
+                         :
+                         <span>Get Battery</span>
+                         }
+                        </Button>
+
                   </Card.Body>
               </Card>
               : null }
@@ -577,7 +645,21 @@ export default function Exchange() {
                       <Card.Text>
                           <p>Distance: {distance}</p>
                       </Card.Text>
-                      <Button onClick={onGetOdometer}variant="primary">Get Distance </Button>
+
+                      <Button onClick={onGetOdometer}variant="primary">
+                         { odometerLoading ?
+                         <Spinner
+                             as="span"
+                             animation="border"
+                             size="sm"
+                             role="status"
+                             aria-hidden="true"
+                         />
+                         :
+                         <span>Get Odomometer</span>
+                         }
+                     </Button>
+
                   </Card.Body>
               </Card>
               : null }
@@ -592,7 +674,21 @@ export default function Exchange() {
                           <p>Model: {model}</p>
                           <p>Year: {year}</p>
                       </Card.Text>
-                      <Button onClick={onGetVehicleAttributes}variant="primary">Get Vehicle Attributes</Button>
+
+                      <Button onClick={onGetVehicleAttributes}variant="primary">
+                         { attributesLoading ?
+                         <Spinner
+                             as="span"
+                             animation="border"
+                             size="sm"
+                             role="status"
+                             aria-hidden="true"
+                         />
+                         :
+                         <span>Get Vehicle Attributes</span>
+                         }
+                     </Button>
+
                   </Card.Body>
               </Card>
               : null }
