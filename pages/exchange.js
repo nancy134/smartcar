@@ -55,12 +55,15 @@ export default function Exchange() {
     const [frontRight, setFrontRight] = useState(null);
     const [backLeft, setBackLeft] = useState(null);
     const [backRight, setBackRight] = useState(null);
+    const [tiresLoading, setTiresLoading] = useState(false);
     const [amountRemaining, setAmountRemaining] = useState(null);
     const [amountRemainingFuel, setAmountRemainingFuel] = useState(null);
     const [percentRemainingFuel, setPercentRemainingFuel] = useState(null);
     const [rangeFuel, setRangeFuel] = useState(null);
+    const [fuelLoading, setFuelLoading] = useState(false);
     const [isPluggedIn, setIsPluggedIn] = useState(null);
     const [chargeState, setChargeState] = useState(null);
+    const [chargeLoading, setChargeLoading] = useState(false);
     const [permissions, setPermissions] = useState(null);
     const [chargeStatus, setChargeStatus] = useState(null);
     const [securityStatus, setSecurityStatus] = useState(null);
@@ -336,39 +339,47 @@ export default function Exchange() {
 
 
     const onGetTirePressure = () => {
+        setTiresLoading(true);
         smartcarService.getTirePressure(accessToken, vehicle).then(function(result){
             setFrontLeft(result.frontLeft);
             setFrontRight(result.frontRight);
             setBackLeft(result.backLeft);
             setBackRight(result.backRight);
+            setTiresLoading(false);
             console.log(result);
         }).catch(function(err){
+            setTiresLoading(false);
             console.log(err);
         });
     }
 
-
     const onGetFuel = () => {
+        setFuelLoading(true);
         smartcarService.getFuel(accessToken, vehicle).then(function(result){
+            setFueldLoading(false);
             setAmountRemainingFuel(result.amountRemaining);
             setPercentRemainingFuel(result.percentRemaining);
             setRangeFuel(result.range);
             console.log(result);
         }).catch(function(err){
+            setFuelLoading(false);
             console.log(err);
         });
     }
 
 
     const onGetCharge = () => {
+        setChargeLoading(true);
         smartcarService.getCharge(accessToken, vehicle).then(function(result){
             if (result.isPluggedIn)
                 setIsPluggedIn("true");
             else
                 setIsPluggedIn("false");
             setChargeState(result.state);
+            setChargeLoading(false);
             console.log(result);
         }).catch(function(err){
+            setChargeLoading(false);
             console.log(err);
         });
     }
@@ -703,7 +714,21 @@ export default function Exchange() {
                           <p>Back Left: {backLeft}</p>
                           <p>Back Right: {backRight}</p>
                       </Card.Text>
-                      <Button onClick={onGetTirePressure}variant="primary">Get Tire Pressure</Button>
+
+                      <Button onClick={onGetTirePressure}variant="primary">
+                         { tiresLoading ?
+                         <Spinner
+                             as="span"
+                             animation="border"
+                             size="sm"
+                             role="status"
+                             aria-hidden="true"
+                         />
+                         :
+                         <span>Get Tire Pressure</span>
+                         }
+                     </Button>
+
                   </Card.Body>
               </Card>
               : null }
@@ -717,7 +742,21 @@ export default function Exchange() {
                           <p>Percent Fuel Remaining: {percentRemainingFuel}</p>
                           <p>Range Fuel: {rangeFuel}</p>
                       </Card.Text>
-                      <Button onClick={onGetFuel}variant="primary">Get Fuel</Button>
+   
+                      <Button onClick={onGetFuel}variant="primary">
+                         { fuelLoading ?
+                         <Spinner
+                             as="span"
+                             animation="border"
+                             size="sm"
+                             role="status"
+                             aria-hidden="true"
+                         />
+                         :
+                         <span>Get Fuel</span>
+                         }
+                     </Button>
+
                   </Card.Body>
               </Card>
               : null }
@@ -729,7 +768,21 @@ export default function Exchange() {
                       <Card.Text>
                           <p>Is Plugged In: {isPluggedIn}</p>      
                           <p>Charge State: {chargeState}</p>
-                          <Button onClick={onGetCharge}variant="primary">Read Charge</Button>
+   
+                          <Button onClick={onGetCharge}variant="primary">
+                         { chargeLoading ?
+                         <Spinner
+                             as="span"
+                             animation="border"
+                             size="sm"
+                             role="status"
+                             aria-hidden="true"
+                         />
+                         :
+                         <span>Read Charge</span>
+                         }
+                     </Button>
+
                       </Card.Text>
                   </Card.Body>
               </Card>
