@@ -66,9 +66,13 @@ export default function Exchange() {
     const [chargeLoading, setChargeLoading] = useState(false);
     const [permissions, setPermissions] = useState(null);
     const [chargeStatus, setChargeStatus] = useState(null);
+    const [chargeStatusLoading, setChargeStatusLoading] = useState(false);
     const [securityStatus, setSecurityStatus] = useState(null);
+    const [securityLoading, setSecurityLoading] = useState(false);
     const [oilLifeRemaining, setOilLifeRemaining] = useState(null);
+    const [oilLifeLoading, setOilLifeLoading] = useState(false);
     const [batteryCapacity, setBatteryCapacity] = useState(null);
+    const [batteryCapacityLoading, setBatteryCapacityLoading] = useState(false);
     const [userId, setUserId] = useState(null);
     const [direction, setDirection] = useState(null);
     const [amperage, setAmperage] = useState(null);
@@ -397,40 +401,55 @@ export default function Exchange() {
         var body = {
             action: "START"
         }
+        setChargeStatusLoading(true);
         smartcarService.controlCharge(accessToken, vehicle, body).then(function(result){
             setChargeStatus(result.status);
             console.log(result);
+            setChargeStatusLoading(false);
         }).catch(function(err){
+            setChargeStatusLoading(false);
             console.log(err);
         });
     }
+
 
     const onControlSecurity = () => {
         var body = {
             action: "LOCK"
         }
+        setSecurityLoading(true);
         smartcarService.controlSecurity(accessToken, vehicle, body).then(function(result){
             setSecurityStatus(result.status);
+            setSecurityLoading(false);
             console.log(result);
         }).catch(function(err){
+            setSecurityLoading(false);
             console.log(err);
         });
     }
+
 
     const onGetEngineOil = () => {
+        setOilLifeLoading(true)
         smartcarService.getEngineOil(accessToken, vehicle).then(function(result){
             setOilLifeRemaining(result.lifeRemaining);
+            setOilLifeLoading(false)
             console.log(result);
         }).catch(function(err){
+            setOilLifeLoading(false)
             console.log(err);
         });
     }
 
+
     const onGetBatteryCapacity = () => {
+        setBatteryCapacityLoading(true);
         smartcarService.getBatteryCapacity(accessToken, vehicle).then(function(result){
             setBatteryCapacity(result.capacity);
+            setBatteryCapacityLoading(false);
             console.log(result);
         }).catch(function(err){
+            setBatteryCapacityLoading(false);
             console.log(err);
         });
     }
@@ -794,7 +813,21 @@ export default function Exchange() {
                       <Card.Title>Control Charge</Card.Title>
                       <Card.Text>
                           <p>Charge Status: {chargeStatus}</p>
-                          <Button onClick={onControlCharge}variant="primary">Control Charge</Button>
+
+                          <Button onClick={onControlCharge}variant="primary">
+                         { chargeStatusLoading ?
+                         <Spinner
+                             as="span"
+                             animation="border"
+                             size="sm"
+                             role="status"
+                             aria-hidden="true"
+                         />
+                         :
+                         <span>Control Charge</span>
+                         }
+                     </Button>
+
                       </Card.Text>
                   </Card.Body>
               </Card>
@@ -806,7 +839,20 @@ export default function Exchange() {
                       <Card.Title>Control Security</Card.Title>
                       <Card.Text>
                           <p>Security Status: {securityStatus}</p>  
-                          <Button onClick={onControlSecurity}variant="primary">Control Security</Button>
+
+                        <Button onClick={onControlSecurity}variant="primary">
+                         { securityLoading ?
+                         <Spinner
+                             as="span"
+                             animation="border"
+                             size="sm"
+                             role="status"
+                             aria-hidden="true"
+                         />
+                         :
+                         <span>Control Security</span>
+                         }
+                     </Button>
                       </Card.Text>
                   </Card.Body>
               </Card>
@@ -818,7 +864,21 @@ export default function Exchange() {
                       <Card.Title>Get Engine Oil</Card.Title>
                       <Card.Text>
                           <p>Engine Oil Life: {oilLifeRemaining}</p>
-                          <Button onClick={onGetEngineOil}variant="primary">Get Engine Oil</Button>
+
+                          <Button onClick={onGetEngineOil}variant="primary">
+                         { oilLifeLoading ?
+                         <Spinner
+                             as="span"
+                             animation="border"
+                             size="sm"
+                             role="status"
+                             aria-hidden="true"
+                         />
+                         :
+                         <span>Get Engine Oil</span>
+                         }
+                     </Button>
+
                       </Card.Text>
                   </Card.Body>
               </Card>
@@ -830,7 +890,21 @@ export default function Exchange() {
                       <Card.Title>Get Battery Capacity</Card.Title>
                       <Card.Text>
                           <p>Battery Capacity: {batteryCapacity}</p>
-                          <Button onClick={onGetBatteryCapacity}variant="primary">Get Battery Capacity</Button>
+
+                          <Button onClick={onGetBatteryCapacity}variant="primary">
+                         { batteryCapacityLoading ?
+                         <Spinner
+                             as="span"
+                             animation="border"
+                             size="sm"
+                             role="status"
+                             aria-hidden="true"
+                         />
+                         :
+                         <span>Get Battery Capacity</span>
+                         }
+                     </Button>
+                     
                       </Card.Text>
                   </Card.Body>
               </Card>
