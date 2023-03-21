@@ -828,9 +828,9 @@ export default function Exchange() {
                          :
                          <span>Start Charge</span>
                          }
-                         </Button>
+                         </Button>{' '}
 
-                         <Button className="ml-2" onClick={() => onControlCharge("STOP")}variant="primary">
+                         <Button onClick={() => onControlCharge("STOP")}variant="primary">
 
                           { chargeStatusLoading ?
                          <Spinner
@@ -869,7 +869,7 @@ export default function Exchange() {
                          :
                          <span>Lock</span>
                          }
-                     </Button>
+                     </Button>{' '}
 
                      <Button onClick={() => onControlSecurity("UNLOCK")}variant="primary">
 
