@@ -397,9 +397,9 @@ export default function Exchange() {
         });
     }
 
-    const onControlCharge = () => {
+    const onControlCharge = (action) => {
         var body = {
-            action: "START"
+            action: action
         }
         setChargeStatusLoading(true);
         smartcarService.controlCharge(accessToken, vehicle, body).then(function(result){
@@ -413,9 +413,10 @@ export default function Exchange() {
     }
 
 
-    const onControlSecurity = () => {
+
+    const onControlSecurity = (action) => {
         var body = {
-            action: "LOCK"
+            action: action
         }
         setSecurityLoading(true);
         smartcarService.controlSecurity(accessToken, vehicle, body).then(function(result){
@@ -427,6 +428,7 @@ export default function Exchange() {
             console.log(err);
         });
     }
+
 
 
     const onGetEngineOil = () => {
@@ -814,7 +816,7 @@ export default function Exchange() {
                       <Card.Text>
                           <p>Charge Status: {chargeStatus}</p>
 
-                          <Button onClick={onControlCharge}variant="primary">
+                          <Button onClick={() => onControlCharge("START")} variant="primary">
                          { chargeStatusLoading ?
                          <Spinner
                              as="span"
@@ -824,7 +826,22 @@ export default function Exchange() {
                              aria-hidden="true"
                          />
                          :
-                         <span>Control Charge</span>
+                         <span>Start Charge</span>
+                         }
+                         </Button>
+
+                         <Button className="ml-2" onClick={() => onControlCharge("STOP")}variant="primary">
+
+                          { chargeStatusLoading ?
+                         <Spinner
+                             as="span"
+                             animation="border"
+                             size="sm"
+                             role="status"
+                             aria-hidden="true"
+                         />
+                         :
+                        <span>Stop Charge</span>                         
                          }
                      </Button>
 
@@ -840,7 +857,7 @@ export default function Exchange() {
                       <Card.Text>
                           <p>Security Status: {securityStatus}</p>  
 
-                        <Button onClick={onControlSecurity}variant="primary">
+                          <Button onClick={() => onControlSecurity("LOCK")}variant="primary">
                          { securityLoading ?
                          <Spinner
                              as="span"
@@ -850,7 +867,24 @@ export default function Exchange() {
                              aria-hidden="true"
                          />
                          :
-                         <span>Control Security</span>
+                         <span>Lock</span>
+                         }
+                     </Button>
+
+                     <Button onClick={() => onControlSecurity("UNLOCK")}variant="primary">
+
+                         { securityLoading ?
+                         <Spinner
+                             as="span"
+                             animation="border"
+                             size="sm"
+                             role="status"
+                             aria-hidden="true"
+                         />
+                         :
+                        <span>Unlock</span>
+
+                        
                          }
                      </Button>
                       </Card.Text>
