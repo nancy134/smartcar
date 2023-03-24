@@ -66,9 +66,10 @@ export default function Exchange() {
     const [chargeLoading, setChargeLoading] = useState(false);
     const [permissions, setPermissions] = useState(null);
     const [chargeStatus, setChargeStatus] = useState(null);
-    const [chargeStatusLoading, setChargeStatusLoading] = useState(false);
-    const [securityStatus, setSecurityStatus] = useState(null);
-    const [securityLoading, setSecurityLoading] = useState(false);
+    const [chargeStatusLoading, setChargeStatusLoading] = useState(false); const [chargeStartLoading, setChargeStartLoading] = useState(false);
+    const [chargeStopLoading, setChargeStopLoading] = useState(false);    const [securityStatus, setSecurityStatus] = useState(null);
+    const [lockLoading, setLockLoading] = useState(false);
+    const [unlockLoading, setUnlockLoading] = useState(false);
     const [oilLifeRemaining, setOilLifeRemaining] = useState(null);
     const [oilLifeLoading, setOilLifeLoading] = useState(false);
     const [batteryCapacity, setBatteryCapacity] = useState(null);
@@ -401,16 +402,23 @@ export default function Exchange() {
         var body = {
             action: action
         }
-        setChargeStatusLoading(true);
+        if (action === "START")
+            setChargeStartLoading(true);
+        else
+            setChargeStopLoading(true);
+        
         smartcarService.controlCharge(accessToken, vehicle, body).then(function(result){
             setChargeStatus(result.status);
             console.log(result);
-            setChargeStatusLoading(false);
+            setChargeStartLoading(false);
+            setChargeStopLoading(false);
         }).catch(function(err){
-            setChargeStatusLoading(false);
+            setChargeStartLoading(false);
+            setChargeStopLoading(false);
             console.log(err);
         });
     }
+
 
 
 
@@ -418,17 +426,22 @@ export default function Exchange() {
         var body = {
             action: action
         }
-        setSecurityLoading(true);
+        if (action === "LOCK")
+            setLockLoading(true);
+        else
+            setUnlockLoading(true);
+            
         smartcarService.controlSecurity(accessToken, vehicle, body).then(function(result){
             setSecurityStatus(result.status);
-            setSecurityLoading(false);
+            setLockLoading(false);
+            setUnlockLoading(false);
             console.log(result);
         }).catch(function(err){
-            setSecurityLoading(false);
+            setLockLoading(false);
+            setUnlockLoading(false);
             console.log(err);
         });
     }
-
 
 
     const onGetEngineOil = () => {
@@ -817,7 +830,7 @@ export default function Exchange() {
                           <p>Charge Status: {chargeStatus}</p>
 
                           <Button onClick={() => onControlCharge("START")} variant="primary">
-                         { chargeStatusLoading ?
+                          { chargeStartLoading ?
                          <Spinner
                              as="span"
                              animation="border"
@@ -832,7 +845,8 @@ export default function Exchange() {
 
                          <Button onClick={() => onControlCharge("STOP")}variant="primary">
 
-                          { chargeStatusLoading ?
+                         { chargeStartLoading ?
+
                          <Spinner
                              as="span"
                              animation="border"
@@ -858,7 +872,7 @@ export default function Exchange() {
                           <p>Security Status: {securityStatus}</p>  
 
                           <Button onClick={() => onControlSecurity("LOCK")}variant="primary">
-                         { securityLoading ?
+                          { lockLoading ?
                          <Spinner
                              as="span"
                              animation="border"
@@ -869,11 +883,14 @@ export default function Exchange() {
                          :
                          <span>Lock</span>
                          }
-                     </Button>{' '}
+                     </Button>
+                     
+                     {' '}
 
                      <Button onClick={() => onControlSecurity("UNLOCK")}variant="primary">
 
-                         { securityLoading ?
+                     { unlockLoading ?
+
                          <Spinner
                              as="span"
                              animation="border"
