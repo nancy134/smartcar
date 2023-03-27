@@ -2,6 +2,8 @@ import authService from '../services/auth';
 import smartcarService, { getLocation, getUser } from '../services/smartcar';
 import googleService from '../services/google';
 import AccountButton from '../components/AccountButton';
+import numeral from 'numeral';
+
 
 import {
     Button,
@@ -661,8 +663,8 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Battery</Card.Title>
                       <Card.Text>
-                          <p>Percent Remaining: {percentRemaining}</p>
-                          <p>Range: {range}</p>
+                        <p>Percent Remaining: {numeral(percentRemaining).format('0%')}</p>
+                        <p>Range: {range}</p>
                       </Card.Text>
                       
                       <Button onClick={onGetBattery}variant="primary">
