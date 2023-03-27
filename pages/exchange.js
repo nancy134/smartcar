@@ -664,7 +664,7 @@ export default function Exchange() {
                       <Card.Title>Battery</Card.Title>
                       <Card.Text>
                         <p>Percent Remaining: {numeral(percentRemaining).format('0%')}</p>
-                        <p>Range: {range}</p>
+                        <p>Range: {numeral(range).format('0,0')} miles</p>
                       </Card.Text>
                       
                       <Button onClick={onGetBattery}variant="primary">
@@ -690,7 +690,7 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Odometer</Card.Title>
                       <Card.Text>
-                          <p>Distance: {distance}</p>
+                      <p>Distance: {numeral(distance).format(0,0)} miles</p>
                       </Card.Text>
 
                       <Button onClick={onGetOdometer}variant="primary">
@@ -745,10 +745,10 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Tire Pressure</Card.Title>
                       <Card.Text>
-                          <p>Front Left: {frontLeft}</p>      
-                          <p>Front Right: {frontRight}</p>
-                          <p>Back Left: {backLeft}</p>
-                          <p>Back Right: {backRight}</p>
+                      <p>Front Left: {numeral(frontLeft).format(0,0)} kPa</p>
+                          <p>Front Right: {numeral(frontRight).format(0,0)} kPa</p>
+                          <p>Back Left: {numeral(backLeft).format(0,0)} kPa</p>
+                          <p>Back Right: {numeral(backRight).format(0,0)} kPa</p>
                       </Card.Text>
 
                       <Button onClick={onGetTirePressure}variant="primary">
@@ -774,9 +774,9 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Get Fuel</Card.Title>
                       <Card.Text>
-                          <p>Amount Fuel Remaining: {amountRemainingFuel}</p>      
-                          <p>Percent Fuel Remaining: {percentRemainingFuel}</p>
-                          <p>Range Fuel: {rangeFuel}</p>
+                        <p>Amount Fuel Remaining: {numeral(amountRemainingFuel).format(0,0.0)} liters</p>
+                        <p>Percent Fuel Remaining: {numeral(percentRemainingFuel).format(0.0)}%</p>
+                        <p>Range Fuel: {numeral(rangeFuel).format(0.0)} km</p>
                       </Card.Text>
    
                       <Button onClick={onGetFuel}variant="primary">
