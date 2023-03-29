@@ -520,6 +520,7 @@ export default function Exchange() {
         });
     }
 
+
     const onStartOver = () => {
         window.location.href = "https://localhost:3000";
     }
@@ -579,6 +580,8 @@ export default function Exchange() {
         </Navbar>
         <Container>
 
+
+
             { isLoggedIn ?
             <div>
 
@@ -635,6 +638,8 @@ export default function Exchange() {
             : null }
 
             { readVin ?
+
+
             <Card className="m-2" id="VIN">
                 <Card.Body>
                     <Card.Title>VIN</Card.Title>
@@ -657,6 +662,7 @@ export default function Exchange() {
                 </Card.Body>
             </Card>
             : null }
+
 
             { readBattery ?
               <Card className="m-2" id="Battery">
@@ -686,6 +692,8 @@ export default function Exchange() {
               : null }
 
               { readOdometer ?
+
+
               <Card className="m-2" id="Odometer">
                   <Card.Body>
                       <Card.Title>Odometer</Card.Title>
@@ -745,10 +753,10 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Tire Pressure</Card.Title>
                       <Card.Text>
-                      <p>Front Left: {numeral(frontLeft).format(0,0)} kPa</p>
-                          <p>Front Right: {numeral(frontRight).format(0,0)} kPa</p>
-                          <p>Back Left: {numeral(backLeft).format(0,0)} kPa</p>
-                          <p>Back Right: {numeral(backRight).format(0,0)} kPa</p>
+                          <p>Front Left: {numeral(frontLeft).format(0,0)} psi</p>
+                          <p>Front Right: {numeral(frontRight).format(0,0)} psi</p>
+                          <p>Back Left: {numeral(backLeft).format(0,0)} psi</p>
+                          <p>Back Right: {numeral(backRight).format(0,0)} psi</p>
                       </Card.Text>
 
                       <Button onClick={onGetTirePressure}variant="primary">
@@ -769,12 +777,13 @@ export default function Exchange() {
               </Card>
               : null }
 
+
               { readFuel ?
               <Card className="m-2" id="Charge">
                   <Card.Body>
                       <Card.Title>Get Fuel</Card.Title>
                       <Card.Text>
-                        <p>Amount Fuel Remaining: {numeral(amountRemainingFuel).format(0,0.0)} liters</p>
+                        <p>Amount Fuel Remaining: {numeral(amountRemainingFuel).format(0,0.0)} gallons</p>
                         <p>Percent Fuel Remaining: {numeral(percentRemainingFuel).format(0.0)}%</p>
                         <p>Range Fuel: {numeral(rangeFuel).format(0.0)} km</p>
                       </Card.Text>
