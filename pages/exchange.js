@@ -785,7 +785,7 @@ export default function Exchange() {
                       <Card.Text>
                         <p>Amount Fuel Remaining: {numeral(amountRemainingFuel).format(0,0.0)} gallons</p>
                         <p>Percent Fuel Remaining: {numeral(percentRemainingFuel).format(0.0)}%</p>
-                        <p>Range Fuel: {numeral(rangeFuel).format(0.0)} km</p>
+                        <p>Range Fuel: {numeral(rangeFuel).format(0.0)} miles</p>
                       </Card.Text>
    
                       <Button onClick={onGetFuel}variant="primary">
@@ -925,7 +925,7 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Get Engine Oil</Card.Title>
                       <Card.Text>
-                          <p>Engine Oil Life: {oilLifeRemaining}</p>
+                      <p>Engine Oil Life: {numeral(oilLifeRemaining).format('0%')}</p>
 
                           <Button onClick={onGetEngineOil}variant="primary">
                          { oilLifeLoading ?
@@ -951,7 +951,7 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Get Battery Capacity</Card.Title>
                       <Card.Text>
-                          <p>Battery Capacity: {batteryCapacity}</p>
+                      <p>Battery Capacity: {numeral(batteryCapacity).format('0')} kWh</p>
 
                           <Button onClick={onGetBatteryCapacity}variant="primary">
                          { batteryCapacityLoading ?
