@@ -363,7 +363,7 @@ export default function Exchange() {
     const onGetFuel = () => {
         setFuelLoading(true);
         smartcarService.getFuel(accessToken, vehicle).then(function(result){
-            setFueldLoading(false);
+            setFuelLoading(false);
             setAmountRemainingFuel(result.amountRemaining);
             setPercentRemainingFuel(result.percentRemaining);
             setRangeFuel(result.range);
@@ -589,10 +589,10 @@ export default function Exchange() {
                 <Card.Body>
                     <Card.Title>Login Info</Card.Title>
                     <Card.Text>
-                        <p>access token: {accessToken}</p>
-                        <p>refresh token: {refreshToken}</p>
-                        <p>expiration: {expiration}</p>
-                        <p>refreshExpiration: {refreshExpiration}</p>
+                        <div>access token: {accessToken}</div>
+                        <div>refresh token: {refreshToken}</div>
+                        <div>expiration: {expiration}</div>
+                        <div>refreshExpiration: {refreshExpiration}</div>
                         <Button variant="primary" onClick={onLogout}>Logout</Button>
                     </Card.Text>
                 </Card.Body>
@@ -612,11 +612,11 @@ export default function Exchange() {
                 <Card.Body>
                     <Card.Title>Get Location</Card.Title>
                     <Card.Text>
-                        <p>latitude: {latitude} longitude: {longitude}</p>
-                        <p>Place name: {placeName}</p>
-                        <p>Place type: {placeType}</p>
-                        <p>Place business status: {placeBusinessStatus}</p>
-                        <p><a href={placeId} rel="noreferrer" target="_blank">View in Google Map</a></p>
+                        <div>latitude: {latitude} longitude: {longitude}</div>
+                        <div>Place name: {placeName}</div>
+                        <div>Place type: {placeType}</div>
+                        <div>Place business status: {placeBusinessStatus}</div>
+                        <div><a href={placeId} rel="noreferrer" target="_blank">View in Google Map</a></div>
 
                         <Button onClick={onGetLocation}variant="primary">
                          { locationLoading ?
@@ -669,8 +669,8 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Battery</Card.Title>
                       <Card.Text>
-                        <p>Percent Remaining: {numeral(percentRemaining).format('0%')}</p>
-                        <p>Range: {numeral(range).format('0,0')} miles</p>
+                        <div>Percent Remaining: {numeral(percentRemaining).format('0%')}</div>
+                        <div>Range: {numeral(range).format('0,0')} miles</div>
                       </Card.Text>
                       
                       <Button onClick={onGetBattery}variant="primary">
@@ -698,7 +698,7 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Odometer</Card.Title>
                       <Card.Text>
-                      <p>Distance: {numeral(distance).format(0,0)} miles</p>
+                      <div>Distance: {numeral(distance).format(0,0)} miles</div>
                       </Card.Text>
 
                       <Button onClick={onGetOdometer}variant="primary">
@@ -724,10 +724,10 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Vehicle Attributes</Card.Title>
                       <Card.Text>
-                          <p>Id: {id}</p>      
-                          <p>Make: {make}</p>
-                          <p>Model: {model}</p>
-                          <p>Year: {year}</p>
+                          <div>Id: {id}</div>      
+                          <div>Make: {make}</div>
+                          <div>Model: {model}</div>
+                          <div>Year: {year}</div>
                       </Card.Text>
 
                       <Button onClick={onGetVehicleAttributes}variant="primary">
@@ -753,10 +753,10 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Tire Pressure</Card.Title>
                       <Card.Text>
-                          <p>Front Left: {numeral(frontLeft).format(0,0)} psi</p>
-                          <p>Front Right: {numeral(frontRight).format(0,0)} psi</p>
-                          <p>Back Left: {numeral(backLeft).format(0,0)} psi</p>
-                          <p>Back Right: {numeral(backRight).format(0,0)} psi</p>
+                          <div>Front Left: {numeral(frontLeft).format(0,0)} psi</div>
+                          <div>Front Right: {numeral(frontRight).format(0,0)} psi</div>
+                          <div>Back Left: {numeral(backLeft).format(0,0)} psi</div>
+                          <div>Back Right: {numeral(backRight).format(0,0)} psi</div>
                       </Card.Text>
 
                       <Button onClick={onGetTirePressure}variant="primary">
@@ -783,9 +783,9 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Get Fuel</Card.Title>
                       <Card.Text>
-                        <p>Amount Fuel Remaining: {numeral(amountRemainingFuel).format(0,0.0)} gallons</p>
-                        <p>Percent Fuel Remaining: {numeral(percentRemainingFuel).format(0.0)}%</p>
-                        <p>Range Fuel: {numeral(rangeFuel).format(0.0)} miles</p>
+                        <div>Amount Fuel Remaining: {numeral(amountRemainingFuel).format(0,0.0)} gallons</div>
+                        <div>Percent Fuel Remaining: {numeral(percentRemainingFuel).format(0.0)}%</div>
+                        <div>Range Fuel: {numeral(rangeFuel).format(0.0)} miles</div>
                       </Card.Text>
    
                       <Button onClick={onGetFuel}variant="primary">
@@ -811,8 +811,8 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Read Charge</Card.Title>
                       <Card.Text>
-                          <p>Is Plugged In: {isPluggedIn}</p>      
-                          <p>Charge State: {chargeState}</p>
+                          <div>Is Plugged In: {isPluggedIn}</div>      
+                          <div>Charge State: {chargeState}</div>
    
                           <Button onClick={onGetCharge}variant="primary">
                          { chargeLoading ?
@@ -838,7 +838,7 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Control Charge</Card.Title>
                       <Card.Text>
-                          <p>Charge Status: {chargeStatus}</p>
+                          <div>Charge Status: {chargeStatus}</div>
 
                           <Button onClick={() => onControlCharge("START")} variant="primary">
                           { chargeStartLoading ?
@@ -880,7 +880,7 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Control Security</Card.Title>
                       <Card.Text>
-                          <p>Security Status: {securityStatus}</p>  
+                          <div>Security Status: {securityStatus}</div>  
 
                           <Button onClick={() => onControlSecurity("LOCK")}variant="primary">
                           { lockLoading ?
@@ -925,7 +925,7 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Get Engine Oil</Card.Title>
                       <Card.Text>
-                      <p>Engine Oil Life: {numeral(oilLifeRemaining).format('0%')}</p>
+                      <div>Engine Oil Life: {numeral(oilLifeRemaining).format('0%')}</div>
 
                           <Button onClick={onGetEngineOil}variant="primary">
                          { oilLifeLoading ?
@@ -951,7 +951,7 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Get Battery Capacity</Card.Title>
                       <Card.Text>
-                      <p>Battery Capacity: {numeral(batteryCapacity).format('0')} kWh</p>
+                      <div>Battery Capacity: {numeral(batteryCapacity).format('0')} kWh</div>
 
                           <Button onClick={onGetBatteryCapacity}variant="primary">
                          { batteryCapacityLoading ?
@@ -977,7 +977,7 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Get User</Card.Title>
                       <Card.Text>
-                          <p>User id: {userId}</p>      
+                          <div>User id: {userId}</div>      
                           <Button onClick={onGetUser}variant="primary">Get User</Button>
                       </Card.Text>
                   </Card.Body>
@@ -989,7 +989,7 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Get Tesla Compass</Card.Title>
                       <Card.Text>
-                          <p>Direction: {direction}</p>
+                          <div>Direction: {direction}</div>
                           <Button onClick={onGetTeslaCompass}variant="primary">Get Tesla Compass</Button>
                       </Card.Text>
                   </Card.Body>
@@ -1001,7 +1001,7 @@ export default function Exchange() {
                   <Card.Body>
                       <Card.Title>Read Charge</Card.Title>
                       <Card.Text>
-                          <p>Amperage: {amperage}</p>
+                          <div>Amperage: {amperage}</div>
                           <Button onClick={onGetTeslaChargeAmperage}variant="primary">Get Tesla Charge Amperage</Button>
                       </Card.Text>
                   </Card.Body>
