@@ -2,6 +2,7 @@ import authService from '../services/auth';
 import smartcarService, { getLocation, getUser } from '../services/smartcar';
 import googleService from '../services/google';
 import AccountButton from '../components/AccountButton';
+import DialogLogin from '../components/DialogLogin';
 import numeral from 'numeral';
 
 
@@ -98,7 +99,7 @@ export default function Exchange() {
     const [vehicleMakes, setVehicleMakes] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(null);
     const [isCarSelected, setIsCarSelected] = useState(null);
-
+    const [showDialogLogin, setShowDialogLogin] = useState(null);
 
     useEffect(() => {
     const onGetTokens = () => {
@@ -239,6 +240,12 @@ export default function Exchange() {
         setExpiration(null);
         setRefreshExpiration(null);
     }
+
+    const onSaveCar = () => {
+        setShowDialogLogin(true);
+    }
+
+
 
 
     const onGetVehicles = () => {
@@ -527,6 +534,9 @@ export default function Exchange() {
     return (
 
     <Container>
+        
+        <DialogLogin show={showDialogLogin}/>
+
         <Navbar collapseOnSelect sticky="top" expand="lg" bg="dark" variant="dark">
             <Container>
                 <Navbar.Brand href="#home">Murban</Navbar.Brand>
@@ -585,6 +595,7 @@ export default function Exchange() {
             { isLoggedIn ?
             <div>
 
+
             <Card className="m-2">
                 <Card.Body>
                     <Card.Title>Login Info</Card.Title>
@@ -593,10 +604,13 @@ export default function Exchange() {
                         <div>refresh token: {refreshToken}</div>
                         <div>expiration: {expiration}</div>
                         <div>refreshExpiration: {refreshExpiration}</div>
-                        <Button variant="primary" onClick={onLogout}>Logout</Button>
+                          <Button variant="primary" onClick={onLogout}>Logout of Smartcar</Button>
+                        {' '}
+                        <Button variant="primary" onClick={onSaveCar}>Save Car to Murban</Button>
                     </Card.Text>
                 </Card.Body>
             </Card>
+
 
             <Form.Select onChange={onSelectCar}>
                 {vehicleMakes && vehicleMakes.map((v) => (
