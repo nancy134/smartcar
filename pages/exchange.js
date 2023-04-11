@@ -535,7 +535,9 @@ export default function Exchange() {
 
     <Container>
         
-        <DialogLogin show={showDialogLogin}/>
+        <DialogLogin 
+            show={showDialogLogin}
+        />
 
         <Navbar collapseOnSelect sticky="top" expand="lg" bg="dark" variant="dark">
             <Container>
