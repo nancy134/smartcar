@@ -544,7 +544,8 @@ export default function Exchange() {
 
     <Container>
         
-        <DialogLogin 
+        <DialogLogin
+            onRegister={onRegister}
             show={showDialogLogin}
         />
 

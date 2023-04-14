@@ -39,7 +39,8 @@ function DialogRegister(props){
                     <Button
                         variant="outline-primary"
                         size="sm"
-                    >Login</Button>
+                    >Already have an Account</Button>
+
                     </Form.Group>
 
                 </Form>
@@ -49,9 +50,11 @@ function DialogRegister(props){
           <Button variant="secondary" onClick={props.onClose}>
             Cancel
           </Button>
+
           <Button variant="primary" onClick={props.onClose}>
-            Register
+            Create Account
           </Button>
+
         </Modal.Footer>
       </Modal>
     );
