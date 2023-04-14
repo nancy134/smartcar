@@ -3,6 +3,7 @@ import smartcarService, { getLocation, getUser } from '../services/smartcar';
 import googleService from '../services/google';
 import AccountButton from '../components/AccountButton';
 import DialogLogin from '../components/DialogLogin';
+import DialogRegister from '../components/DialogRegister';
 import numeral from 'numeral';
 
 
@@ -100,6 +101,8 @@ export default function Exchange() {
     const [isLoggedIn, setIsLoggedIn] = useState(null);
     const [isCarSelected, setIsCarSelected] = useState(null);
     const [showDialogLogin, setShowDialogLogin] = useState(null);
+    const [showDialogRegister, setShowDialogRegister] = useState(null);
+
 
     useEffect(() => {
     const onGetTokens = () => {
@@ -242,9 +245,15 @@ export default function Exchange() {
     }
 
     const onSaveCar = () => {
+        setShowDialogRegister(false);
         setShowDialogLogin(true);
     }
 
+
+    const onRegister = () => {
+        setShowDialogLogin(false);
+        setShowDialogRegister(true);
+    }
 
 
 
@@ -537,6 +546,10 @@ export default function Exchange() {
         
         <DialogLogin 
             show={showDialogLogin}
+        />
+
+        <DialogRegister
+            show={showDialogRegister}
         />
 
         <Navbar collapseOnSelect sticky="top" expand="lg" bg="dark" variant="dark">

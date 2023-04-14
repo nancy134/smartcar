@@ -8,23 +8,23 @@ import {
 } from 'react-bootstrap';
 
 
-function DialogLogin(props){
+function DialogRegister(props){
 
     return(
       <Modal
-      show={props.show} 
+      show={props.show}
       onHide={props.onClose}
       size="lg"
       >
 
         <Modal.Header closeButton>
-        <Modal.Title>Login to Murban</Modal.Title>
+        <Modal.Title>Create an Account with Murban</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
                 <Form>
                     <Form.Label>Email</Form.Label>
-                    <Form.Control 
+                    <Form.Control
                     />
                     <Form.Label>Password</Form.Label>
                     <InputGroup>
@@ -34,20 +34,15 @@ function DialogLogin(props){
                             variant="secondary"
                         >Show</Button>
                     </InputGroup>
-                  
+
                     <Form.Group className="mt-2">
                     <Button
                         variant="outline-primary"
                         size="sm"
-                    >Forgot password?</Button>{' '}
-                    <Button
-                        onClick={props.onRegister}
-                        variant="outline-primary"
-                        size="sm"
-                    >Create new account</Button>
+                    >Login</Button>
                     </Form.Group>
 
-                </Form> 
+                </Form>
             </Modal.Body>
 
         <Modal.Footer>
@@ -55,10 +50,10 @@ function DialogLogin(props){
             Cancel
           </Button>
           <Button variant="primary" onClick={props.onClose}>
-            Login
+            Register
           </Button>
         </Modal.Footer>
       </Modal>
     );
 }
-export default DialogLogin;
+export default DialogRegister;
