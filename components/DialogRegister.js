@@ -7,8 +7,27 @@ import {
   Button
 } from 'react-bootstrap';
 
+import {
+  useState,
+  useEffect
+} from 'react';
+
+
 
 function DialogRegister(props){
+
+  const [email, setEmail] = useState(null);
+
+  const [password, setPassword] = useState(null);
+
+    
+  const handleEmailChange = (e) => {
+      setEmail(e.target.value);
+  }
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+}
 
     return(
       <Modal
@@ -23,13 +42,20 @@ function DialogRegister(props){
 
         <Modal.Body>
                 <Form>
-                    <Form.Label>Email</Form.Label>
+                <Form.Label>Email</Form.Label>
                     <Form.Control
+                        onChange={handleEmailChange}
                     />
-                    <Form.Label>Password</Form.Label>
+
+                  <Form.Label>Password</Form.Label>
                     <InputGroup>
                         <Form.Control
+                            type="password"
+                            onChange={handlePasswordChange}
                         />
+
+
+
                         <Button
                             variant="secondary"
                         >Show</Button>

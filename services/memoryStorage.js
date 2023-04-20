@@ -58,7 +58,9 @@ const MemoryStorage = (function(){
         setRefreshToken: _setRefreshToken,
 
         // Murban Clear All
-        murbanClearAll: _sparkClearAll,
+        murbanClearAll: _murbanClearAll,
+
+
 
     }
 }) ();
