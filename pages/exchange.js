@@ -250,9 +250,21 @@ export default function Exchange() {
     }
 
 
-    const onRegister = () => {
+    const onSwitchRegister = () => {
         setShowDialogLogin(false);
         setShowDialogRegister(true);
+    }
+
+    const onRegister = () => {
+        var body = {
+            email: "nancy_piedra@yahoo.com",
+            password: "Murban_0814"
+        }
+        authService.signup(body).then(function(result){
+            console.log(result);
+        }).catch(function(err){
+            console.log(err);
+        });
     }
 
 
@@ -545,13 +557,15 @@ export default function Exchange() {
     <Container>
         
         <DialogLogin
-            onRegister={onRegister}
+            onRegister={onSwitchRegister}
             show={showDialogLogin}
         />
 
         <DialogRegister
             show={showDialogRegister}
+            onRegister={onRegister}
         />
+
 
         <Navbar collapseOnSelect sticky="top" expand="lg" bg="dark" variant="dark">
             <Container>

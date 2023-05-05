@@ -77,7 +77,7 @@ function DialogRegister(props){
             Cancel
           </Button>
 
-          <Button variant="primary" onClick={props.onClose}>
+          <Button variant="primary" onClick={props.onRegister}>
             Create Account
           </Button>
 

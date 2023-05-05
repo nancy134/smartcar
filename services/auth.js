@@ -168,9 +168,17 @@ export function confirmForgotPassword(params){
 }
 
 const auth = {
+    signin,
+    refreshToken,
+    signup,
+    confirm,
+    resendConfirmationCode,
+    forgotPassword,
+    confirmForgotPassword,
     getSmartcarTokens,
     getAuthUrl
 };
+
 export default auth;
 
 
