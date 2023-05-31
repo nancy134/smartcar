@@ -249,7 +249,6 @@ export default function Exchange() {
         setShowDialogLogin(true);
     }
 
-
     const onSwitchRegister = () => {
         setShowDialogLogin(false);
         setShowDialogRegister(true);
@@ -257,7 +256,7 @@ export default function Exchange() {
 
     const onRegister = () => {
         var body = {
-            email: "nancy_piedra@yahoo.com",
+            username: "billrockus@gmail.com",
             password: "Murban_0814"
         }
         authService.signup(body).then(function(result){
@@ -267,6 +266,17 @@ export default function Exchange() {
         });
     }
 
+    const onLogin = (email, password) => {
+        var body = {
+            username: email,
+            password: password
+        }
+        authService.signin(body).then(function(result){
+            console.log(result);
+        }).catch(function(err){
+            console.log(err);
+        });
+    }
 
 
     const onGetVehicles = () => {
@@ -355,7 +365,6 @@ export default function Exchange() {
         });
     }
 
-
   
     const onGetVehicleAttributes = () => {
         setAttributesLoading(true);
@@ -371,7 +380,7 @@ export default function Exchange() {
            console.log(err);
         });
     }
-
+2
 
     const onGetTirePressure = () => {
         setTiresLoading(true);
@@ -387,6 +396,7 @@ export default function Exchange() {
             console.log(err);
         });
     }
+
 
     const onGetFuel = () => {
         setFuelLoading(true);
@@ -559,7 +569,9 @@ export default function Exchange() {
         <DialogLogin
             onRegister={onSwitchRegister}
             show={showDialogLogin}
+            onLogin={onLogin}
         />
+
 
         <DialogRegister
             show={showDialogRegister}

@@ -1,6 +1,12 @@
 import React from 'react';
 
 import {
+  useState,
+  useEffect
+} from 'react';
+
+
+import {
   Modal,
   InputGroup,
   Form,
@@ -9,6 +15,24 @@ import {
 
 
 function DialogLogin(props){
+
+  const [email, setEmail] = useState(null);
+
+  const [password, setPassword] = useState(null);
+
+
+  const handleEmailChange = (e) => {
+      setEmail(e.target.value);
+  }
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+}
+
+const handleLogin = () => {
+  props.onLogin(email, password);
+
+}
 
     return(
       <Modal
@@ -23,13 +47,17 @@ function DialogLogin(props){
 
         <Modal.Body>
                 <Form>
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control 
+                <Form.Label>Email</Form.Label>
+                    <Form.Control
+                         onChange={handleEmailChange}
                     />
                     <Form.Label>Password</Form.Label>
+                    
                     <InputGroup>
                         <Form.Control
+                            onChange={handlePasswordChange}
                         />
+
                         <Button
                             variant="secondary"
                         >Show</Button>
@@ -54,7 +82,8 @@ function DialogLogin(props){
           <Button variant="secondary" onClick={props.onClose}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={props.onClose}>
+          <Button variant="primary" onClick={handleLogin}>
+
             Login
           </Button>
         </Modal.Footer>
