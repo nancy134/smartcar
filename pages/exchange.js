@@ -254,16 +254,22 @@ export default function Exchange() {
         setShowDialogRegister(true);
     }
 
-    const onRegister = () => {
+    const onRegister = (username, password) => {
         var body = {
-            username: "billrockus@gmail.com",
-            password: "Murban_0814"
+            username: username,
+            password: password
         }
         authService.signup(body).then(function(result){
+            setShowDialogRegister(false);
             console.log(result);
         }).catch(function(err){
             console.log(err);
         });
+    }
+
+
+    const onDialogRegisterClose = () => {
+        setShowDialogRegister(false);
     }
 
     const onLogin = (email, password) => {
@@ -573,9 +579,10 @@ export default function Exchange() {
         />
 
 
-        <DialogRegister
+<DialogRegister
             show={showDialogRegister}
             onRegister={onRegister}
+            onClose={onDialogRegisterClose}
         />
 
 

@@ -29,6 +29,11 @@ function DialogRegister(props){
     setPassword(e.target.value);
 }
 
+const handleRegister = () => {
+  props.onRegister(email, password);
+}
+
+
     return(
       <Modal
       show={props.show}
@@ -77,7 +82,8 @@ function DialogRegister(props){
             Cancel
           </Button>
 
-          <Button variant="primary" onClick={props.onRegister}>
+          <Button variant="primary" onClick={handleRegister}>
+
             Create Account
           </Button>
 
