@@ -271,6 +271,7 @@ export default function Exchange() {
     const onDialogRegisterClose = () => {
         setShowDialogRegister(false);
     }
+    
 
     const onLogin = (email, password) => {
         var body = {
@@ -278,7 +279,9 @@ export default function Exchange() {
             password: password
         }
         authService.signin(body).then(function(result){
+            setShowDialogLogin(false);
             console.log(result);
+
         }).catch(function(err){
             console.log(err);
         });
