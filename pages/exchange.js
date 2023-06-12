@@ -100,9 +100,12 @@ export default function Exchange() {
     const [vehicleMakes, setVehicleMakes] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(null);
     const [isCarSelected, setIsCarSelected] = useState(null);
+    // Login Dialog
     const [showDialogLogin, setShowDialogLogin] = useState(null);
+    
+    // Register Dialog
     const [showDialogRegister, setShowDialogRegister] = useState(null);
-
+    const [errorDialogRegister, setErrorDialogRegister] = useState(null);
 
     useEffect(() => {
     const onGetTokens = () => {
@@ -257,12 +260,19 @@ export default function Exchange() {
     const onRegister = (username, password) => {
         var body = {
             username: username,
-            password: password
+            password: password,
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+            expiration: expiration,
+            refreshExpiration: refreshExpiration
         }
+        
+
         authService.signup(body).then(function(result){
             setShowDialogRegister(false);
             console.log(result);
         }).catch(function(err){
+            setErrorDialogRegister("Error creating an account");
             console.log(err);
         });
     }
@@ -586,8 +596,8 @@ export default function Exchange() {
             show={showDialogRegister}
             onRegister={onRegister}
             onClose={onDialogRegisterClose}
+            errorMsg={errorDialogRegister}
         />
-
 
         <Navbar collapseOnSelect sticky="top" expand="lg" bg="dark" variant="dark">
             <Container>

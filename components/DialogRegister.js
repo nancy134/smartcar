@@ -4,8 +4,10 @@ import {
   Modal,
   InputGroup,
   Form,
-  Button
+  Button,
+  Alert
 } from 'react-bootstrap';
+
 
 import {
   useState,
@@ -46,6 +48,11 @@ const handleRegister = () => {
         </Modal.Header>
 
         <Modal.Body>
+
+        { props.errorMsg ?
+        <Alert>{props.errorMsg}</Alert>
+        : null }
+        
                 <Form>
                 <Form.Label>Email</Form.Label>
                     <Form.Control
