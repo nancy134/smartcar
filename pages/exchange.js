@@ -153,7 +153,8 @@ export default function Exchange() {
         });
     }
 
-        if (router.isReady){
+    if (router.isReady && router.query.code){
+
             onGetTokens();
         } else {
             return;
