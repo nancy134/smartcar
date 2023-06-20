@@ -1,10 +1,12 @@
 import authService from '../services/auth';
+import userService from '../services/users';
 import smartcarService, { getLocation, getUser } from '../services/smartcar';
 import googleService from '../services/google';
 import AccountButton from '../components/AccountButton';
 import DialogLogin from '../components/DialogLogin';
 import DialogRegister from '../components/DialogRegister';
 import numeral from 'numeral';
+import memoryStorageService from '../services/memoryStorage';
 
 
 import {
@@ -284,19 +286,32 @@ export default function Exchange() {
     }
     
 
-    const onLogin = (email, password) => {
-        var body = {
-            username: email,
-            password: password
-        }
-        authService.signin(body).then(function(result){
-            setShowDialogLogin(false);
-            console.log(result);
+    const onShowLoginMurban = () => {
+        setShowDialogLogin(true);   
+   }
 
+
+   const onLogin = (email, password) => {
+    var body = {
+        username: email,
+        password: password
+    }
+    authService.signin(body).then(function(result){
+
+        memoryStorageService.setAccessToken(result.access_token);
+        memoryStorageService.setRefreshToken(result.refresh_token);
+
+        console.log(result);
+        userService.getUser().then(function(userResult){
+            console.log(userResult);            
+            setShowDialogLogin(false);
         }).catch(function(err){
             console.log(err);
         });
-    }
+    }).catch(function(err){
+        console.log(err);
+    });
+}
 
 
     const onGetVehicles = () => {
@@ -1089,7 +1104,15 @@ export default function Exchange() {
             : null }
         </div>
         :
+        <div>
         <AccountButton/>
+        <Button
+            onClick={onShowLoginMurban}
+            variant="primary"
+        >Login to Murban</Button>
+        </div>
+
+        
         }
       </Container>
       </Container>
