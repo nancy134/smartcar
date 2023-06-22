@@ -298,8 +298,9 @@ export default function Exchange() {
     }
     authService.signin(body).then(function(result){
 
-        memoryStorageService.setAccessToken(result.access_token);
-        memoryStorageService.setRefreshToken(result.refresh_token);
+        memoryStorageService.setAccessToken(result.IdToken);
+        memoryStorageService.setRefreshToken(result.RefreshToken);
+
 
         console.log(result);
         userService.getUser().then(function(userResult){
@@ -311,6 +312,10 @@ export default function Exchange() {
     }).catch(function(err){
         console.log(err);
     });
+}
+
+const onDialogLoginClose = () => {
+    setShowDialogLogin(false);
 }
 
 
@@ -605,7 +610,9 @@ export default function Exchange() {
             onRegister={onSwitchRegister}
             show={showDialogLogin}
             onLogin={onLogin}
+            onClose={onDialogLoginClose}
         />
+
 
 
 <DialogRegister
