@@ -104,6 +104,14 @@ export default function Exchange() {
     const [isCarSelected, setIsCarSelected] = useState(null);
     // Login Dialog
     const [showDialogLogin, setShowDialogLogin] = useState(null);
+    const [isLoggedInMurban, setIsLoggedInMurban] = useState(null);
+
+    //Murban user
+    const [murbanIdToken, setMurbanIdToken] = useState(null);
+    const [murbanRefreshToken, setMurbanRefreshToken] = useState(null);
+    const [murbanEmail, setMurbanEmail] = useState(null);
+    const [murbanCognitoId, setMurbanCognitoId] = useState(null);
+
     
     // Register Dialog
     const [showDialogRegister, setShowDialogRegister] = useState(null);
@@ -301,9 +309,18 @@ export default function Exchange() {
         memoryStorageService.setAccessToken(result.IdToken);
         memoryStorageService.setRefreshToken(result.RefreshToken);
 
+        setMurbanIdToken(result.IdToken)
+        setMurbanRefreshToken(result.RefreshToken)
 
         console.log(result);
         userService.getUser().then(function(userResult){
+
+            setMurbanIdToken
+            setMurbanRefreshToken
+            setMurbanEmail(userResult.email);
+            setMurbanCognitoId(userResult.cognitoId)
+            setIsLoggedInMurban(true);
+
             console.log(userResult);            
             setShowDialogLogin(false);
         }).catch(function(err){
@@ -675,6 +692,20 @@ const onDialogLoginClose = () => {
         </Navbar>
         <Container>
 
+        { isLoggedInMurban ?
+            <Card className="m-2">
+                <Card.Body>
+                <Card.Title>Logged into Murban</Card.Title>
+                    <Card.Text>
+                        <div>{murbanEmail}</div>
+                        <div>{murbanCognitoId}</div>
+
+                    </Card.Text>
+
+                </Card.Body>
+            </Card>
+            : null }
+
 
 
             { isLoggedIn ?
@@ -702,6 +733,7 @@ const onDialogLoginClose = () => {
                 <option value={v.id} key={v.id}>{v.year + " " + v.make + " " +v.model }</option>
                 ))}
             </Form.Select>
+
 
             { isCarSelected ?
             <div>
