@@ -112,6 +112,9 @@ export default function Exchange() {
     const [murbanEmail, setMurbanEmail] = useState(null);
     const [murbanCognitoId, setMurbanCognitoId] = useState(null);
 
+   
+    const [smartcars, setSmartcars] = useState(null);
+
     
     // Register Dialog
     const [showDialogRegister, setShowDialogRegister] = useState(null);
@@ -269,14 +272,16 @@ export default function Exchange() {
     }
 
     const onRegister = (username, password) => {
-        var body = {
-            username: username,
-            password: password,
-            accessToken: accessToken,
-            refreshToken: refreshToken,
-            expiration: expiration,
-            refreshExpiration: refreshExpiration
-        }
+
+    var body = {
+        username: username,
+        password: password,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        expiration: expiration,
+        refreshExpiration: refreshExpiration,
+        smartcarId: userId
+    }
         
 
         authService.signup(body).then(function(result){
@@ -319,6 +324,10 @@ export default function Exchange() {
             setMurbanRefreshToken
             setMurbanEmail(userResult.email);
             setMurbanCognitoId(userResult.cognitoId)
+
+            if (userResult.smartcars && userResult.smartcars.length > 0) setSmartcars(userResult.smartcars);
+            
+
             setIsLoggedInMurban(true);
 
             console.log(userResult);            
@@ -699,6 +708,16 @@ const onDialogLoginClose = () => {
                     <Card.Text>
                         <div>{murbanEmail}</div>
                         <div>{murbanCognitoId}</div>
+
+                        { smartcars ?
+                         <div>
+                         <div>{smartcars[0].expiration}</div>
+                         <div>{smartcars[0].refreshExpiration}</div>
+                         </div>
+                        : null }
+
+
+                  
 
                     </Card.Text>
 
