@@ -221,15 +221,15 @@ export default function Exchange() {
 
     const getVehicles = (accessToken) => {
         return new Promise(function(resolve, reject){
-            smartcarService.getVehicles(result1.accessToken).then(function(result2){
+            smartcarService.getVehicles(accessToken).then(function(result2){
                 console.log(result2);
                 setVehicles(result2.vehicles);
                 if (result2.vehicles && result2.vehicles[0]){
-                    getMakes(result1.accessToken, result2.vehicles).then(function(makes){console.log(makes);
+                    getMakes(accessToken, result2.vehicles).then(function(makes){console.log(makes);
                         setVehicle(result2.vehicles[0]);
                         setVehicleMakes(makes);
                         setIsCarSelected(true);
-                        smartcarService.getPermissions(result1.accessToken, result2.vehicles[0]).then(function(result3){
+                        smartcarService.getPermissions(accessToken, result2.vehicles[0]).then(function(result3){
                             setPermissions(result3.permissions);
                             for (var i=0; i<result3.permissions.length; i++){
                                 console.log(result3.permissions[i]);
