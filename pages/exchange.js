@@ -121,52 +121,34 @@ export default function Exchange() {
     const [errorDialogRegister, setErrorDialogRegister] = useState(null);
 
     useEffect(() => {
-    const onGetTokens = () => {
-        var body = {
-            code: router.query.code
-        }
-        authService.getSmartcarTokens(body).then(function(result1){
-            setAccessToken(result1.accessToken);
-            setRefreshToken(result1.refreshToken);
-            setExpiration(result1.expiration);
-            setRefreshExpiration(result1.refreshExpiration);
-            setIsLoggedIn(true);
-            console.log(result1);
-            smartcarService.getVehicles(result1.accessToken).then(function(result2){
-                console.log(result2);
-                setVehicles(result2.vehicles);
-                if (result2.vehicles && result2.vehicles[0]){
-                    getMakes(result1.accessToken, result2.vehicles).then(function(makes){console.log(makes);
-                        setVehicle(result2.vehicles[0]);
-                        setVehicleMakes(makes);
-                        setIsCarSelected(true);
-                        smartcarService.getPermissions(result1.accessToken, result2.vehicles[0]).then(function(result3){
-                            setPermissions(result3.permissions);
-                            for (var i=0; i<result3.permissions.length; i++){
-                                console.log(result3.permissions[i]);
-                                var p = result3.permissions[i];
-                                setPermission(p);
-                            }
-                            console.log(result3);
-                            setInitialized(true);
-                        }).catch(function(err){
-                            console.log(err);
-                        });
+        
+        const onGetTokens = () => {
+            var body = {
+                code: router.query.code
+            }
+            authService.getSmartcarTokens(body).then(function(result1){
+                setAccessToken(result1.accessToken);
+                setRefreshToken(result1.refreshToken);
+                setExpiration(result1.expiration);
+                setRefreshExpiration(result1.refreshExpiration);
+                setIsLoggedIn(true);
+                console.log(result1);
+                getVehicles(result1.accessToken).then(function(result2){
+                    smartcarService.getUser(result1.accessToken).then(function(user){
+                        setUserId(user.id);                
+                        setInitialized(true);
                     }).catch(function(err){
                         console.log(err);
                     });
-                } else {
-                    setInitialized(true);
-                }
+                }).catch(function(err){
+                    console.log(err);
+                });           
             }).catch(function(err){
                 console.log(err);
             });
-        }).catch(function(err){
-            console.log(err);
-        });
-    }
+        }
 
-    if (router.isReady && router.query.code){
+        if (router.isReady && router.query.code){
 
             onGetTokens();
         } else {
@@ -235,6 +217,40 @@ export default function Exchange() {
         setUserId(null);
         setDirection(null);
         setAmperage(null);
+    }
+
+    const getVehicles = (accessToken) => {
+        return new Promise(function(resolve, reject){
+            smartcarService.getVehicles(result1.accessToken).then(function(result2){
+                console.log(result2);
+                setVehicles(result2.vehicles);
+                if (result2.vehicles && result2.vehicles[0]){
+                    getMakes(result1.accessToken, result2.vehicles).then(function(makes){console.log(makes);
+                        setVehicle(result2.vehicles[0]);
+                        setVehicleMakes(makes);
+                        setIsCarSelected(true);
+                        smartcarService.getPermissions(result1.accessToken, result2.vehicles[0]).then(function(result3){
+                            setPermissions(result3.permissions);
+                            for (var i=0; i<result3.permissions.length; i++){
+                                console.log(result3.permissions[i]);
+                                var p = result3.permissions[i];
+                                setPermission(p);
+                            }
+                            console.log(result3);
+                            resolve(true);
+                        }).catch(function(err){
+                            reject(err);
+                        });
+                    }).catch(function(err){
+                        reject(err);
+                    });
+                } else {
+                    resolve(true);
+                }
+            }).catch(function(err){
+                reject(err);
+            });
+        });
     }
 
     const getMakes = (accessToken, vehicles) => {
@@ -687,10 +703,6 @@ const onDialogLoginClose = () => {
                         <Nav.Link href="#Security">Security</Nav.Link>
                         : null }
 
-                        { getUser ?
-                        <Nav.Link href="#User">User</Nav.Link>
-                        : null }
-
                         { readCharge ?
                         <Nav.Link href="#TeslaAmp">Tesla Amperage</Nav.Link>
                         : null }
@@ -1122,18 +1134,6 @@ const onDialogLoginClose = () => {
               </Card>
               : null }
     
-              {getUser ?
-              <Card className="m-2" id="User">
-                  <Card.Body>
-                      <Card.Title>Get User</Card.Title>
-                      <Card.Text>
-                          <div>User id: {userId}</div>      
-                          <Button onClick={onGetUser}variant="primary">Get User</Button>
-                      </Card.Text>
-                  </Card.Body>
-              </Card>
-              : null }
-
               { readCompass ?
               <Card className="m-2">
                   <Card.Body>
