@@ -114,6 +114,7 @@ export default function Exchange() {
     const [murbanRefreshToken, setMurbanRefreshToken] = useState(null);
     const [murbanEmail, setMurbanEmail] = useState(null);
     const [murbanCognitoId, setMurbanCognitoId] = useState(null);
+    const [showDialogSaveCarToMurban, setShowDialogSaveCarToMurban] = useState(null);
 
    
     const [smartcars, setSmartcars] = useState(null);
@@ -310,6 +311,12 @@ export default function Exchange() {
             setErrorDialogRegister("Error creating an account");
             console.log(err);
         });
+    }
+
+    const onSaveCarToMurban = () => {
+    }
+    const onDialogSaveCarToMurbanClose = () => {
+
     }
 
 
@@ -665,6 +672,12 @@ const onDialogLoginClose = () => {
             onRegister={onRegister}
             onClose={onDialogRegisterClose}
             errorMsg={errorDialogRegister}
+        />
+
+<DialogSaveCarToMurban
+            onSave={onSaveCarToMurban}
+            show={showDialogSaveCarToMurban}
+            onClose={onDialogSaveCarToMurbanClose}
         />
 
         <Navbar collapseOnSelect sticky="top" expand="lg" bg="dark" variant="dark">
