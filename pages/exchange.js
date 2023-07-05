@@ -313,6 +313,10 @@ export default function Exchange() {
         });
     }
 
+    const onShowDialogSaveCarToMurban = () => {
+    }
+
+
     const onSaveCarToMurban = () => {
         setShowDialogSaveCarToMurban(true);
     }
@@ -765,14 +769,16 @@ const onDialogLoginClose = () => {
                     { murbanEmail ?
                     <Button
                         variant="primary"
-                        onClick={onSaveCarToMurban}
+                        onClick={onShowDialogSaveCarToMurban}
+
                     >
                     <span>Save Car to Murban</span>
                     </Button>
                     :
                     <Button
                         variant="primary"
-                        onClick={onSaveCar}
+                        onClick={onShowLoginMurban}
+
                     >
                     <span>Login to Murban</span>
                     </Button>
