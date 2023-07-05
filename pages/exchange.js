@@ -314,7 +314,10 @@ export default function Exchange() {
     }
 
     const onSaveCarToMurban = () => {
+        setShowDialogSaveCarToMurban(true);
     }
+
+
     const onDialogSaveCarToMurbanClose = () => {
 
     }
@@ -759,16 +762,21 @@ const onDialogLoginClose = () => {
                     <Button variant="primary" onClick={onLogout}>Logout of Smartcar</Button>
                     {' '}
 
+                    { murbanEmail ?
                     <Button
-                        variant="primary" 
+                        variant="primary"
+                        onClick={onSaveCarToMurban}
+                    >
+                    <span>Save Car to Murban</span>
+                    </Button>
+                    :
+                    <Button
+                        variant="primary"
                         onClick={onSaveCar}
                     >
-                    { murbanEmail ?
-                    <span>Save Car to Murban</span>
-                    :
                     <span>Login to Murban</span>
-                    }
                     </Button>
+                    }                  
 
                 </Card.Body>
             </Card>
