@@ -5,6 +5,8 @@ import googleService from '../services/google';
 import AccountButton from '../components/AccountButton';
 import DialogLogin from '../components/DialogLogin';
 import DialogRegister from '../components/DialogRegister';
+import DialogSaveCarToMurban from '../components/DialogSaveCarToMurban';
+
 import numeral from 'numeral';
 import memoryStorageService from '../services/memoryStorage';
 
@@ -743,7 +745,18 @@ const onDialogLoginClose = () => {
                     <div>userId: {userId}</div>
                     <Button variant="primary" onClick={onLogout}>Logout of Smartcar</Button>
                     {' '}
-                    <Button variant="primary" onClick={onSaveCar}>Save Car to Murban</Button>
+
+                    <Button
+                        variant="primary" 
+                        onClick={onSaveCar}
+                    >
+                    { murbanEmail ?
+                    <span>Save Car to Murban</span>
+                    :
+                    <span>Login to Murban</span>
+                    }
+                    </Button>
+
                 </Card.Body>
             </Card>
 
