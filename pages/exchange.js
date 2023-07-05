@@ -83,6 +83,7 @@ export default function Exchange() {
     const [userId, setUserId] = useState(null);
     const [direction, setDirection] = useState(null);
     const [amperage, setAmperage] = useState(null);
+    const [tesla, setTesla] = useState(null);
 
     // Permissions
     const [readCompass, setReadCompass] = useState(null);
@@ -135,6 +136,7 @@ export default function Exchange() {
                 console.log(result1);
                 getVehicles(result1.accessToken).then(function(result2){
                     smartcarService.getUser(result1.accessToken).then(function(user){
+                        console.log(user);
                         setUserId(user.id);                
                         setInitialized(true);
                     }).catch(function(err){
@@ -214,7 +216,6 @@ export default function Exchange() {
         setSecurityStatus(null);
         setOilLifeRemaining(null);
         setBatteryCapacity(null);
-        setUserId(null);
         setDirection(null);
         setAmperage(null);
     }
@@ -703,10 +704,6 @@ const onDialogLoginClose = () => {
                         <Nav.Link href="#Security">Security</Nav.Link>
                         : null }
 
-                        { readCharge ?
-                        <Nav.Link href="#TeslaAmp">Tesla Amperage</Nav.Link>
-                        : null }
-
                     </Nav>
                 </Navbar.Collapse>
             </Container>
@@ -717,22 +714,15 @@ const onDialogLoginClose = () => {
             <Card className="m-2">
                 <Card.Body>
                 <Card.Title>Logged into Murban</Card.Title>
-                    <Card.Text>
-                        <div>{murbanEmail}</div>
-                        <div>{murbanCognitoId}</div>
+                    <div>{murbanEmail}</div>
+                    <div>{murbanCognitoId}</div>
 
-                        { smartcars ?
-                         <div>
-                         <div>{smartcars[0].expiration}</div>
-                         <div>{smartcars[0].refreshExpiration}</div>
-                         </div>
-                        : null }
-
-
-                  
-
-                    </Card.Text>
-
+                    { smartcars ?
+                    <div>
+                    <div>{smartcars[0].expiration}</div>
+                    <div>{smartcars[0].refreshExpiration}</div>
+                    </div>
+                    : null }
                 </Card.Body>
             </Card>
             : null }
@@ -746,15 +736,14 @@ const onDialogLoginClose = () => {
             <Card className="m-2">
                 <Card.Body>
                     <Card.Title>Login Info</Card.Title>
-                    <Card.Text>
-                        <div>access token: {accessToken}</div>
-                        <div>refresh token: {refreshToken}</div>
-                        <div>expiration: {expiration}</div>
-                        <div>refreshExpiration: {refreshExpiration}</div>
-                          <Button variant="primary" onClick={onLogout}>Logout of Smartcar</Button>
-                        {' '}
-                        <Button variant="primary" onClick={onSaveCar}>Save Car to Murban</Button>
-                    </Card.Text>
+                    <div>access token: {accessToken}</div>
+                    <div>refresh token: {refreshToken}</div>
+                    <div>expiration: {expiration}</div>
+                    <div>refreshExpiration: {refreshExpiration}</div>
+                    <div>userId: {userId}</div>
+                    <Button variant="primary" onClick={onLogout}>Logout of Smartcar</Button>
+                    {' '}
+                    <Button variant="primary" onClick={onSaveCar}>Save Car to Murban</Button>
                 </Card.Body>
             </Card>
 
@@ -773,28 +762,24 @@ const onDialogLoginClose = () => {
             <Card className="m-2" id="location">
                 <Card.Body>
                     <Card.Title>Get Location</Card.Title>
-                    <Card.Text>
-                        <div>latitude: {latitude} longitude: {longitude}</div>
-                        <div>Place name: {placeName}</div>
-                        <div>Place type: {placeType}</div>
-                        <div>Place business status: {placeBusinessStatus}</div>
-                        <div><a href={placeId} rel="noreferrer" target="_blank">View in Google Map</a></div>
-
-                        <Button onClick={onGetLocation}variant="primary">
-                         { locationLoading ?
-                         <Spinner
-                             as="span"
-                             animation="border"
-                             size="sm"
-                             role="status"
-                             aria-hidden="true"
-                         />
-                         :
-                         <span>Get Location</span>
-                         }
-                     </Button>
-
-                    </Card.Text>
+                    <div>latitude: {latitude} longitude: {longitude}</div>
+                    <div>Place name: {placeName}</div>
+                    <div>Place type: {placeType}</div>
+                    <div>Place business status: {placeBusinessStatus}</div>
+                    <div><a href={placeId} rel="noreferrer" target="_blank">View in Google Map</a></div>
+                    <Button onClick={onGetLocation}variant="primary">
+                    { locationLoading ?
+                    <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                    />
+                    :
+                    <span>Get Location</span>
+                    }
+                    </Button>
                 </Card.Body>
             </Card>
             : null }
@@ -805,22 +790,19 @@ const onDialogLoginClose = () => {
             <Card className="m-2" id="VIN">
                 <Card.Body>
                     <Card.Title>VIN</Card.Title>
-                    <Card.Text>{vin}</Card.Text>
-
-                     <Button onClick={onGetVin}variant="primary">
-                         { vinLoading ?
-                         <Spinner
-                             as="span"
-                             animation="border"
-                             size="sm"
-                             role="status"
-                             aria-hidden="true"
-                         />
-                         :
-                         <span>Get VIN</span>
-                         }
-                     </Button>
-
+                    <Button onClick={onGetVin}variant="primary">
+                        { vinLoading ?
+                        <Spinner
+                            as="span"
+                            animation="border"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                        />
+                        :
+                        <span>Get VIN</span>
+                        }
+                    </Button>
                 </Card.Body>
             </Card>
             : null }
@@ -830,10 +812,8 @@ const onDialogLoginClose = () => {
               <Card className="m-2" id="Battery">
                   <Card.Body>
                       <Card.Title>Battery</Card.Title>
-                      <Card.Text>
-                        <div>Percent Remaining: {numeral(percentRemaining).format('0%')}</div>
-                        <div>Range: {numeral(range).format('0,0')} miles</div>
-                      </Card.Text>
+                      <div>Percent Remaining: {numeral(percentRemaining).format('0%')}</div>
+                      <div>Range: {numeral(range).format('0,0')} miles</div>
                       
                       <Button onClick={onGetBattery}variant="primary">
                          { batteryLoading ?
@@ -847,8 +827,7 @@ const onDialogLoginClose = () => {
                          :
                          <span>Get Battery</span>
                          }
-                        </Button>
-
+                      </Button>
                   </Card.Body>
               </Card>
               : null }
@@ -859,10 +838,7 @@ const onDialogLoginClose = () => {
               <Card className="m-2" id="Odometer">
                   <Card.Body>
                       <Card.Title>Odometer</Card.Title>
-                      <Card.Text>
                       <div>Distance: {numeral(distance).format(0,0)} miles</div>
-                      </Card.Text>
-
                       <Button onClick={onGetOdometer}variant="primary">
                          { odometerLoading ?
                          <Spinner
@@ -876,7 +852,6 @@ const onDialogLoginClose = () => {
                          <span>Get Odomometer</span>
                          }
                      </Button>
-
                   </Card.Body>
               </Card>
               : null }
@@ -885,12 +860,10 @@ const onDialogLoginClose = () => {
               <Card className="m-2" id="Attributes">
                   <Card.Body>
                       <Card.Title>Vehicle Attributes</Card.Title>
-                      <Card.Text>
-                          <div>Id: {id}</div>      
-                          <div>Make: {make}</div>
-                          <div>Model: {model}</div>
-                          <div>Year: {year}</div>
-                      </Card.Text>
+                      <div>Id: {id}</div>      
+                      <div>Make: {make}</div>
+                      <div>Model: {model}</div>
+                      <div>Year: {year}</div>
 
                       <Button onClick={onGetVehicleAttributes}variant="primary">
                          { attributesLoading ?
@@ -914,12 +887,10 @@ const onDialogLoginClose = () => {
               <Card className="m-2" id="TirePressure">
                   <Card.Body>
                       <Card.Title>Tire Pressure</Card.Title>
-                      <Card.Text>
-                          <div>Front Left: {numeral(frontLeft).format(0,0)} psi</div>
-                          <div>Front Right: {numeral(frontRight).format(0,0)} psi</div>
-                          <div>Back Left: {numeral(backLeft).format(0,0)} psi</div>
-                          <div>Back Right: {numeral(backRight).format(0,0)} psi</div>
-                      </Card.Text>
+                      <div>Front Left: {numeral(frontLeft).format(0,0)} psi</div>
+                      <div>Front Right: {numeral(frontRight).format(0,0)} psi</div>
+                      <div>Back Left: {numeral(backLeft).format(0,0)} psi</div>
+                      <div>Back Right: {numeral(backRight).format(0,0)} psi</div>
 
                       <Button onClick={onGetTirePressure}variant="primary">
                          { tiresLoading ?
@@ -934,7 +905,6 @@ const onDialogLoginClose = () => {
                          <span>Get Tire Pressure</span>
                          }
                      </Button>
-
                   </Card.Body>
               </Card>
               : null }
@@ -944,11 +914,9 @@ const onDialogLoginClose = () => {
               <Card className="m-2" id="Charge">
                   <Card.Body>
                       <Card.Title>Get Fuel</Card.Title>
-                      <Card.Text>
-                        <div>Amount Fuel Remaining: {numeral(amountRemainingFuel).format(0,0.0)} gallons</div>
-                        <div>Percent Fuel Remaining: {numeral(percentRemainingFuel).format(0.0)}%</div>
-                        <div>Range Fuel: {numeral(rangeFuel).format(0.0)} miles</div>
-                      </Card.Text>
+                      <div>Amount Fuel Remaining: {numeral(amountRemainingFuel).format(0,0.0)} gallons</div>
+                      <div>Percent Fuel Remaining: {numeral(percentRemainingFuel).format(0.0)}%</div>
+                      <div>Range Fuel: {numeral(rangeFuel).format(0.0)} miles</div>
    
                       <Button onClick={onGetFuel}variant="primary">
                          { fuelLoading ?
@@ -963,7 +931,6 @@ const onDialogLoginClose = () => {
                          <span>Get Fuel</span>
                          }
                      </Button>
-
                   </Card.Body>
               </Card>
               : null }
@@ -972,25 +939,22 @@ const onDialogLoginClose = () => {
               <Card className="m-2" id="Charge">
                   <Card.Body>
                       <Card.Title>Read Charge</Card.Title>
-                      <Card.Text>
-                          <div>Is Plugged In: {isPluggedIn}</div>      
-                          <div>Charge State: {chargeState}</div>
+                      <div>Is Plugged In: {isPluggedIn}</div>      
+                      <div>Charge State: {chargeState}</div>
    
-                          <Button onClick={onGetCharge}variant="primary">
-                         { chargeLoading ?
-                         <Spinner
-                             as="span"
-                             animation="border"
-                             size="sm"
-                             role="status"
-                             aria-hidden="true"
-                         />
-                         :
-                         <span>Read Charge</span>
-                         }
+                      <Button onClick={onGetCharge}variant="primary">
+                      { chargeLoading ?
+                      <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                      />
+                      :
+                      <span>Read Charge</span>
+                      }
                      </Button>
-
-                      </Card.Text>
                   </Card.Body>
               </Card>
               : null }
@@ -999,40 +963,37 @@ const onDialogLoginClose = () => {
               <Card className="m-2">
                   <Card.Body>
                       <Card.Title>Control Charge</Card.Title>
-                      <Card.Text>
-                          <div>Charge Status: {chargeStatus}</div>
+                      <div>Charge Status: {chargeStatus}</div>
 
-                          <Button onClick={() => onControlCharge("START")} variant="primary">
-                          { chargeStartLoading ?
-                         <Spinner
-                             as="span"
-                             animation="border"
-                             size="sm"
-                             role="status"
-                             aria-hidden="true"
-                         />
-                         :
-                         <span>Start Charge</span>
-                         }
-                         </Button>{' '}
+                      <Button onClick={() => onControlCharge("START")} variant="primary">
+                      { chargeStartLoading ?
+                      <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                      />
+                      :
+                      <span>Start Charge</span>
+                      }
+                      </Button>{' '}
 
-                         <Button onClick={() => onControlCharge("STOP")}variant="primary">
+                      <Button onClick={() => onControlCharge("STOP")}variant="primary">
 
-                         { chargeStartLoading ?
+                      { chargeStartLoading ?
 
-                         <Spinner
-                             as="span"
-                             animation="border"
-                             size="sm"
-                             role="status"
-                             aria-hidden="true"
-                         />
-                         :
-                        <span>Stop Charge</span>                         
-                         }
-                     </Button>
-
-                      </Card.Text>
+                      <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                      />
+                      :
+                      <span>Stop Charge</span>                         
+                      }
+                      </Button>
                   </Card.Body>
               </Card>
               : null }
@@ -1041,28 +1002,25 @@ const onDialogLoginClose = () => {
               <Card className="m-2" id="Security">
                   <Card.Body>
                       <Card.Title>Control Security</Card.Title>
-                      <Card.Text>
-                          <div>Security Status: {securityStatus}</div>  
+                      <div>Security Status: {securityStatus}</div>  
 
-                          <Button onClick={() => onControlSecurity("LOCK")}variant="primary">
-                          { lockLoading ?
-                         <Spinner
-                             as="span"
-                             animation="border"
-                             size="sm"
-                             role="status"
-                             aria-hidden="true"
-                         />
-                         :
-                         <span>Lock</span>
-                         }
-                     </Button>
-                     
-                     {' '}
+                      <Button onClick={() => onControlSecurity("LOCK")}variant="primary">
+                      { lockLoading ?
+                      <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                      />
+                      :
+                      <span>Lock</span>
+                      }
+                      </Button>
+                      {' '}
+                      <Button onClick={() => onControlSecurity("UNLOCK")}variant="primary">
 
-                     <Button onClick={() => onControlSecurity("UNLOCK")}variant="primary">
-
-                     { unlockLoading ?
+                      { unlockLoading ?
 
                          <Spinner
                              as="span"
@@ -1077,7 +1035,6 @@ const onDialogLoginClose = () => {
                         
                          }
                      </Button>
-                      </Card.Text>
                   </Card.Body>
               </Card>
               : null }
@@ -1086,7 +1043,6 @@ const onDialogLoginClose = () => {
               <Card className="m-2">
                   <Card.Body>
                       <Card.Title>Get Engine Oil</Card.Title>
-                      <Card.Text>
                       <div>Engine Oil Life: {numeral(oilLifeRemaining).format('0%')}</div>
 
                           <Button onClick={onGetEngineOil}variant="primary">
@@ -1102,8 +1058,6 @@ const onDialogLoginClose = () => {
                          <span>Get Engine Oil</span>
                          }
                      </Button>
-
-                      </Card.Text>
                   </Card.Body>
               </Card>
               : null }
@@ -1112,7 +1066,6 @@ const onDialogLoginClose = () => {
               <Card className="m-2">
                   <Card.Body>
                       <Card.Title>Get Battery Capacity</Card.Title>
-                      <Card.Text>
                       <div>Battery Capacity: {numeral(batteryCapacity).format('0')} kWh</div>
 
                           <Button onClick={onGetBatteryCapacity}variant="primary">
@@ -1128,8 +1081,6 @@ const onDialogLoginClose = () => {
                          <span>Get Battery Capacity</span>
                          }
                      </Button>
-                     
-                      </Card.Text>
                   </Card.Body>
               </Card>
               : null }
@@ -1138,22 +1089,18 @@ const onDialogLoginClose = () => {
               <Card className="m-2">
                   <Card.Body>
                       <Card.Title>Get Tesla Compass</Card.Title>
-                      <Card.Text>
-                          <div>Direction: {direction}</div>
-                          <Button onClick={onGetTeslaCompass}variant="primary">Get Tesla Compass</Button>
-                      </Card.Text>
+                      <div>Direction: {direction}</div>
+                      <Button onClick={onGetTeslaCompass}variant="primary">Get Tesla Compass</Button>
                   </Card.Body>
               </Card>
               : null }
  
-              { readCharge ?
+              { readCharge && tesla ?
               <Card className="m-2">
                   <Card.Body>
                       <Card.Title>Read Charge</Card.Title>
-                      <Card.Text>
-                          <div>Amperage: {amperage}</div>
-                          <Button onClick={onGetTeslaChargeAmperage}variant="primary">Get Tesla Charge Amperage</Button>
-                      </Card.Text>
+                      <div>Amperage: {amperage}</div>
+                      <Button onClick={onGetTeslaChargeAmperage}variant="primary">Get Tesla Charge Amperage</Button>
                   </Card.Body>
               </Card>
               : null }
