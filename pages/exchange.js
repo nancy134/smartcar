@@ -738,6 +738,8 @@ const onDialogLoginClose = () => {
                 <Card.Title>Logged into Murban</Card.Title>
                     <div>{murbanEmail}</div>
                     <div>{murbanCognitoId}</div>
+                    
+
 
                     { smartcars ?
                     <div>
