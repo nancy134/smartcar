@@ -318,7 +318,20 @@ export default function Exchange() {
 
 
     const onSaveCarToMurban = () => {
+        var body = 
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+            expiration: expiration,
+            refreshExpiration: refreshExpiration,
+            smartcarId: userId
+        };
         setShowDialogSaveCarToMurban(true);
+            
+        userService.createUserMeSmartcars(body).then(function(result){
+            console.log(result);
+        }).catch(function(err){
+            console.log(err);
+        });
     }
 
 
